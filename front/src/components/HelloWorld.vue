@@ -1,71 +1,39 @@
 <template>
-  <v-container>
-    <v-row no-gutters>
-      <v-col>
-        <v-card>
-          <v-card-text>
-            <v-autocomplete
-              v-model="select"
-              :loading="loading"
-              :items="items"
-              :search-input.sync="search"
-              class="mx-4"
-              hide-details
-              label="What movie did you watch ?"
-              no-data-text="No match"
-              item-text="title"
-              item-value="id"
-              outlined
-              shaped
-              no-filter
-              auto-select-first
-            >
-              <template v-slot:item="{ item }">
-                <template>
-                  <v-list-item-avatar tile>
-                    <v-img
-                      v-if="item.poster_path"
-                      :src="`https://image.tmdb.org/t/p/w500/${item.poster_path}`"
-                    />
-                    <v-img
-                      v-else
-                      src="https://picsum.photos/id/11/100/60"
-                    />
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}<span class="grey--text text--lighten-1"> {{ new Date(item.release_date).getFullYear() }}</span></v-list-item-title>
-                    <v-list-item-subtitle>{{ item.overview }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </template>
-              </template>
-            </v-autocomplete>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-col>
-        <v-card>
-          <v-card-title>
-            Nutrition
-            <v-spacer></v-spacer>
-            <v-text-field
-              v-model="search2"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
-          </v-card-title>
-          <v-data-table
-            :headers="headers"
-            :items="desserts"
-            :search="search2"
-          ></v-data-table>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-autocomplete
+    v-model="select"
+    :loading="loading"
+    :items="items"
+    :search-input.sync="search"
+    class="mx-4"
+    hide-details
+    label="What movie did you watch ?"
+    no-data-text="No match"
+    item-text="title"
+    item-value="id"
+    outlined
+    shaped
+    no-filter
+    auto-select-first
+  >
+    <template v-slot:item="{ item }">
+      <template>
+        <v-list-item-avatar tile>
+          <v-img
+            v-if="item.poster_path"
+            :src="`https://image.tmdb.org/t/p/w500/${item.poster_path}`"
+          />
+          <v-img
+            v-else
+            src="https://picsum.photos/id/11/100/60"
+          />
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.title }}<span class="grey--text text--lighten-1"> {{ new Date(item.release_date).getFullYear() }}</span></v-list-item-title>
+          <v-list-item-subtitle>{{ item.overview }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </template>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script>
