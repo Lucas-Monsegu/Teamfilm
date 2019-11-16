@@ -1160,6 +1160,20 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
+keygrip-autorotate@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/keygrip-autorotate/-/keygrip-autorotate-1.0.0.tgz#52a7052d8d1be3637f7b3a2d456f0ad6d688fc89"
+  integrity sha512-E+1v63Qy5aP3B0UIfreDCyPfV9H6miwIBip5GJ2cNS2/53CiFbbRfVztE6RpvE/VjYTNmP3dAeUhQeHrNXeGCQ==
+  dependencies:
+    keygrip "^1.0.3"
+
+keygrip@^1.0.3:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"
+  integrity sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==
+  dependencies:
+    tsscmp "1.0.6"
+
 keygrip@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
@@ -2183,6 +2197,11 @@ ts-node@^8.5.2:
     make-error "^1.1.1"
     source-map-support "^0.5.6"
     yn "^3.0.0"
+
+tsscmp@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/tsscmp/-/tsscmp-1.0.6.tgz#85b99583ac3589ec4bfef825b5000aa911d605eb"
+  integrity sha512-LxhtAkPDTkVCMQjt2h6eBVY28KCjikZqZfMcC15YBeNjkgUpdCfBu5HoiOTDu86v6smE8yOjyEktJ8hlbANHQA==
 
 type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"

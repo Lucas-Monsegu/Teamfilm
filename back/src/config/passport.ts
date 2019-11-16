@@ -16,12 +16,11 @@ async function connect(profile: discordStrat.Profile, cb: any) {
     try {
       const newUser = await user.CreateUserIntoDB()
       return cb(null, newUser)
-    } catch {}
+    } catch { }
   }
 }
 
 passport.serializeUser((user: User, done) => {
-  console.log("serialize", user)
   done(null, user.id)
 })
 
