@@ -15,6 +15,9 @@ export default {
   name: 'App',
   components: {
     Bar
+  },
+  mounted () {
+    this.$store.dispatch('auth')
   }
 }
 </script>

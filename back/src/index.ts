@@ -1,10 +1,10 @@
 import express from "express"
-import router from "./routes/routes"
+import misc from "./routes/misc"
+import auth from "./routes/auth"
 import bodyparser from "body-parser"
 import cookie from "cookie-session"
 import passport from "./config/passport"
 import KeygripAutorotate from "keygrip-autorotate"
-import crypto from "crypto"
 
 export const app = express()
 
@@ -27,7 +27,8 @@ app.use(
 )
 app.use(passport.initialize())
 app.use(passport.session())
-app.use("/api", router)
+app.use("/api", misc)
+app.use("/api", auth)
 app.listen(3000, function () {
-  console.log("Example app listening on port 3000!")
+  console.log("Backend listening on port 3000")
 })

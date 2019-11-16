@@ -4,36 +4,56 @@
       color="deep-purple accent-4"
       dark
     >
-      <v-app-bar-nav-icon to="/">
+      <v-app-bar-nav-icon
+        to="/"
+        class="ma-0"
+      >
       </v-app-bar-nav-icon>
 
       <v-toolbar-title>TeamFilm</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-menu
-        left
-        bottom
+      <v-btn
+        tile
+        icon
+        class="ma-0"
+        v-if="!$store.getters.user"
       >
-        <template v-slot:activator="{ on }">
-          <v-btn
-            icon
-            v-on="on"
-          >
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
-          >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+        <v-avatar>
+          <v-skeleton-loader
+            ref="skeleton"
+            type="avatar"
+          ></v-skeleton-loader>
+        </v-avatar>
+      </v-btn>
+      <v-btn
+        fab
+        icon
+        class="ma-0"
+        v-else-if="Object.keys($store.getters.user).length > 0"
+      >
+        <v-avatar>
+          <v-img :src="$store.getters.user.avatar"></v-img>
+        </v-avatar>
+      </v-btn>
+      <v-btn
+        v-else
+        text
+        @click="login"
+      >Sign in</v-btn>
     </v-app-bar>
   </div>
 </template>
+
+<script>
+import login from '../utils/login'
+
+export default {
+  methods: {
+    login () {
+      login(this.$route.path)
+    }
+  }
+}
+</script>

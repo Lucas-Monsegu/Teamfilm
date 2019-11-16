@@ -20,6 +20,8 @@
     "start": "nodemon"
   },
   "devDependencies": {
+    "@types/connect-history-api-fallback": "^1.3.3",
+    "connect-history-api-fallback": "^1.6.0",
     "nodemon": "^1.19.4",
     "typescript": "^3.7.2"
   }
