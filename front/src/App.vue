@@ -11,12 +11,24 @@
 
 <script>
 import Bar from './components/Bar.vue'
+import axios from 'axios'
+
 export default {
   name: 'App',
   components: {
     Bar
   },
-  mounted () {
+  created () {
+    axios.interceptors.response.use(
+      response => response,
+      error => {
+        const { status } = error.response
+        if (status === 401) {
+          this.$store.dispatch('logout')
+        }
+        return Promise.reject(error)
+      }
+    )
     this.$store.dispatch('auth')
   }
 }

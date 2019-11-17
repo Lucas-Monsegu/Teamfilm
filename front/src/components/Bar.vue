@@ -1,13 +1,17 @@
 <template>
   <div>
     <v-app-bar
-      color="deep-purple accent-4"
+      color="blue accent-3"
       dark
+      dense
     >
       <v-app-bar-nav-icon
         to="/"
         class="ma-0"
       >
+        <v-icon>
+          mdi-video-vintage
+        </v-icon>
       </v-app-bar-nav-icon>
 
       <v-toolbar-title>TeamFilm</v-toolbar-title>
@@ -57,3 +61,14 @@ export default {
   }
 }
 </script>
+
+<style>
+@font-face {
+  font-family: "Palace";
+  src: url("~@/assets/fonts/PalaceScriptMT.ttf");
+}
+.v-toolbar__title {
+  font-family: "Palace";
+  font-size: 4rem !important;
+}
+</style>

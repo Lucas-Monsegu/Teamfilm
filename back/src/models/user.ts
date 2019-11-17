@@ -1,22 +1,19 @@
-import Pool from "../pg"
+import Pool from "./pg"
 
 class User {
   id: number | null = null
-  discordId: string
-  name: string
-  avatar: string
-  constructor(discordId: string, name: string, avatar: string) {
-    this.discordId = discordId
-    this.name = name
-    this.avatar = avatar
-  }
+  constructor
+    (public discordId: string,
+      public name: string,
+      public avatar: string) { }
+
   async CreateUserIntoDB(): Promise<User | null> {
     if (this.discordId && this.name && this.avatar) {
       const values = [this.discordId, this.name, this.avatar]
       const text =
         "INSERT INTO main.user(discord_id, name, avatar) VALUES($1, $2, $3) RETURNING *"
       try {
-        const res = await Pool.query(text, values)
+        await Pool.query(text, values)
         return this
       } catch (err) {
         console.error(err.stack)

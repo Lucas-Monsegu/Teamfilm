@@ -1,5 +1,5 @@
 import express from "express"
-import misc from "./routes/misc"
+import misc from "./routes/film"
 import auth from "./routes/auth"
 import bodyparser from "body-parser"
 import cookie from "cookie-session"

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.user) res.status(401).send("You are not authenticated")
+  if (!req.user) res.sendStatus(401)
   else next()
 }
 

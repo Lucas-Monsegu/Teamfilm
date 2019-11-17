@@ -22,11 +22,12 @@ export default new Vuex.Store({
         .then(res => {
           ctx.commit('auth', res.data)
         })
-        .catch(ctx.commit('logout'))
+        .catch(_ => console.error)
     },
     logout (ctx) {
       fetch('get', '/logout')
         .then(ctx.commit('logout'))
+        .catch(_ => console.error)
     }
   },
   getters: {
