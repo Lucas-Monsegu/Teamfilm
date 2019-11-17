@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Bar />
-    <v-content>
+    <v-content id="content">
       <v-container fluid>
         <router-view />
       </v-container>
@@ -36,6 +36,10 @@ export default {
 
 <style>
 html {
+  height: "100%";
   overflow-y: auto !important;
 }
+/* .v-content__wrap {
+  background-color: #577280 !important;
+} */
 </style>

@@ -1,16 +1,15 @@
 <template>
   <div class="home">
-    <SearchMovie />
+    <Table />
   </div>
 </template>
 
 <script>
-import SearchMovie from '@/components/SearchMovie.vue'
-
+import Table from '@/components/Table.vue'
 export default {
   name: 'home',
   components: {
-    SearchMovie
+    Table
   }
 }
 </script>

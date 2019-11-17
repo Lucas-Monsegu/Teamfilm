@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar
-      color="blue accent-3"
+      color="teal darken-3"
       dark
       dense
     >
@@ -14,7 +14,7 @@
         </v-icon>
       </v-app-bar-nav-icon>
 
-      <v-toolbar-title>TeamFilm</v-toolbar-title>
+      <v-toolbar-title class="pt-1">TeamFilm</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
