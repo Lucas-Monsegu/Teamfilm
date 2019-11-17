@@ -1,27 +1,38 @@
 <template>
-  <div>
+  <v-dialog v-model="dialog">
+    <template v-slot:activator="{ on }">
+      <v-btn
+        v-on="on"
+        fab
+        small
+        dark
+        color="blue accent-2"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </template>
     <v-autocomplete
       v-model="select"
       :loading="loading"
       :items="items"
       :search-input.sync="search"
-      class="mx-4"
       hide-details
-      label="What movie did you watch ?"
+      label="What film do you wanna add ?"
       no-data-text="No match"
       item-text="title"
       item-value="id"
-      outlined
-      shaped
+      solo
       no-filter
       auto-select-first
+      @change="add"
     >
       <template v-slot:item="{ item }">
         <template>
           <v-list-item-avatar tile>
             <v-img
               v-if="item.poster_path"
-              :src="`https://image.tmdb.org/t/p/w500/${item.poster_path}`"
+              :aspect-ratio="1/1"
+              :src="`https://image.tmdb.org/t/p/w92/${item.poster_path}`"
             />
             <v-responsive
               v-else
@@ -40,13 +51,14 @@
         </template>
       </template>
     </v-autocomplete>
-  </div>
+  </v-dialog>
 </template>
 
 <script>
 export default {
   data () {
     return {
+      dialog: false,
       loading: false,
       items: [],
       search: null,
@@ -59,6 +71,9 @@ export default {
     }
   },
   methods: {
+    add () {
+      console.log('add')
+    },
     async querySelections (v) {
       this.loading = true
       const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e59fb866a5c3211ad38d145410a3598b&language=en-US&query=${v}&page=1&include_adult=false`)

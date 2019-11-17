@@ -1,205 +1,146 @@
 <template>
-  <v-card>
-    <v-card-title>
-      Nutrition
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-      :search="search"
-    ></v-data-table>
-  </v-card>
+  <v-container>
+    <v-row>
+      <v-col
+        cols="6"
+        offset="3"
+      >
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          hide-details
+          autofocus
+          outlined
+          shaped
+        ></v-text-field>
+      </v-col>
+      <v-col>
+
+        <v-btn
+          class="mx-2"
+          small
+          outlined
+          dark
+          color="grey"
+          @click="getMovieList"
+        >
+          <v-icon>mdi-update</v-icon>
+        </v-btn>
+        <SearchMovie />
+      </v-col>
+    </v-row>
+    <v-card>
+      <v-data-table
+        :headers="headers"
+        :items="films"
+        :search="search"
+        @click:row="goto"
+        :loading="loading"
+      >
+        <template v-slot:item.genres="{ item }">
+          <Genres :genres="item.genres" />
+        </template>
+        <template v-slot:item.rating="{ item }">
+          <Rating />
+        </template>
+        <template v-slot:item.runtime="{ item }">
+          <Runtime :runtime="item.runtime" />
+        </template>
+        <template v-slot:item.poster_path="{ item }">
+          <Poster :path="item.poster_path" />
+        </template>
+        <template v-slot:item.release_date="{ item }">
+          {{ getDate(item.release_date) }}
+        </template>
+        <template v-slot:no-results>
+          <div>
+            No matching films, add it to the list !
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
+import fetch from '@/utils/fetch'
+import Genres from '@/components/Genres.vue'
+import Runtime from '@/components/Runtime.vue'
+import Rating from '@/components/Rating.vue'
+import Poster from '@/components/Poster.vue'
+import SearchMovie from '@/components/SearchMovie.vue'
+
 export default {
+  components: {
+    Genres,
+    Runtime,
+    Rating,
+    Poster,
+    SearchMovie
+  },
   data () {
     return {
+      loading: false,
       search: '',
       headers: [
         {
-          text: 'Dessert (100g serving)',
+          text: 'Title',
           align: 'left',
-          sortable: false,
-          value: 'name'
+          sortable: true,
+          value: 'title'
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Iron (%)', value: 'iron' }
+        { text: 'Poster', value: 'poster_path' },
+        { text: 'Genres', value: 'genres' },
+        { text: 'Rating', value: 'rating', sortable: true },
+        { text: 'Release', value: 'release_date', sortable: true },
+        { text: 'Language', value: 'language' },
+        { text: 'Runtime', value: 'runtime' }
       ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%'
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%'
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%'
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%'
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%'
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%'
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%'
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%'
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
-        },
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%'
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%'
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%'
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%'
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%'
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%'
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%'
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%'
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
-        }
-      ]
+      films: []
     }
+  },
+  methods: {
+    add (e) {
+      console.log('add')
+    },
+    goto (e) {
+      console.log('goto')
+      this.$router.push(e.tmdb_id.toString())
+    },
+    getDate (dateString) {
+      return new Date(dateString).getFullYear()
+    },
+    async getMovieList () {
+      this.loading = true
+      const res = await fetch('get', '/get_list')
+      const json = await res.data
+      this.films = json
+      this.loading = false
+    }
+  },
+  mounted () {
+    this.getMovieList()
   }
 }
 </script>
+
+<style>
+#content
+  > div
+  > div
+  > div
+  > div
+  > div.v-card.v-sheet.theme--light
+  > div
+  > div.v-data-table__wrapper
+  > table
+  > tbody
+  > tr,
+.v-chip {
+  cursor: pointer;
+}
+.v-data-table__empty-wrapper {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+</style>

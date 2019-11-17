@@ -24,12 +24,12 @@ class Film {
   }
 
   static async AddMovie(tmdbId: number): Promise<Boolean> {
-    const text = "INSERT INTO main.film(tmdb_id, genres, title, language, release_date, runtime, poster_path) VALUES($1, $2, $3, $4, $5, $6, $7)"
+    const text = "INSERT INTO main.film(tmdb_id, genres, title, language, release_date, runtime, poster_path, rating) VALUES($1, $2, $3, $4, $5, $6, $7, $8)"
     const url = `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=e59fb866a5c3211ad38d145410a3598b&language=en-US`
     const res = await fetch(url)
     const json = await res.json()
     const genres = json.genres.map((obj: any) => obj.name)
-    let values = [tmdbId, genres, json.title, json.original_language, new Date(json.release_date), parseInt(json.runtime), json.poster_path]
+    let values = [tmdbId, genres, json.title, json.original_language, new Date(json.release_date), parseInt(json.runtime), json.poster_path, -1]
     try {
       await Pool.query(text, values)
       return true

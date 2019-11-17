@@ -1,20 +1,15 @@
 import express from "express"
 import misc from "./routes/film"
+import commentRoutes from "./routes/comments"
 import auth from "./routes/auth"
-import bodyparser from "body-parser"
 import cookie from "cookie-session"
 import passport from "./config/passport"
 import KeygripAutorotate from "keygrip-autorotate"
 
 export const app = express()
 
-// post parsing setup
-app.use(
-  bodyparser.urlencoded({
-    extended: true
-  })
-)
-app.use(bodyparser.json())
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 app.use(
   cookie({
     name: "rand",
@@ -29,6 +24,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use("/api", misc)
 app.use("/api", auth)
+app.use("/api", commentRoutes)
 app.listen(3000, function () {
   console.log("Backend listening on port 3000")
 })

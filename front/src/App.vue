@@ -3,7 +3,12 @@
     <Bar />
     <v-content id="content">
       <v-container fluid>
-        <router-view />
+        <v-scroll-x-reverse-transition
+          mode="out-in"
+          duration="300"
+        >
+          <router-view />
+        </v-scroll-x-reverse-transition>
       </v-container>
     </v-content>
   </v-app>
@@ -22,8 +27,8 @@ export default {
     axios.interceptors.response.use(
       response => response,
       error => {
-        const { status } = error.response
-        if (status === 401) {
+        const status = error.response && error.response.status ? error.response.status : null
+        if (status && status === 401) {
           this.$store.dispatch('logout')
         }
         return Promise.reject(error)

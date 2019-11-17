@@ -13,6 +13,12 @@
           mdi-video-vintage
         </v-icon>
       </v-app-bar-nav-icon>
+      <v-btn
+        icon
+        to="/about"
+      >
+        <v-icon>mdi-pine-tree</v-icon>
+      </v-btn>
 
       <v-toolbar-title class="pt-1">TeamFilm</v-toolbar-title>
 
@@ -32,7 +38,6 @@
         </v-avatar>
       </v-btn>
       <v-btn
-        fab
         icon
         class="ma-0"
         v-else-if="Object.keys($store.getters.user).length > 0"
