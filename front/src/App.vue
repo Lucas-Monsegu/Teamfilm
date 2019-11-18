@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Anim />
+    <Animations />
     <Bar />
     <v-content id="content">
       <v-container fluid>
@@ -17,14 +17,15 @@
 
 <script>
 import Bar from './components/Bar.vue'
-import Anim from '@/components/Anim.vue'
 import axios from 'axios'
+import Cookie from 'vue-cookie'
+import Animations from '@/components/Animations.vue'
 
 export default {
   name: 'App',
   components: {
     Bar,
-    Anim
+    Animations
   },
   created () {
     axios.interceptors.response.use(
@@ -38,6 +39,12 @@ export default {
       }
     )
     this.$store.dispatch('auth')
+  },
+  mounted () {
+    if (Cookie.get('anim')) {
+      Cookie.set('anim', 'yeaaaaah', { expires: '1D' })
+      this.$store.commit('animteamfilm', true)
+    }
   }
 }
 </script>

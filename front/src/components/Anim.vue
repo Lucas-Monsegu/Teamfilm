@@ -1,50 +1,84 @@
 <template>
   <v-overlay
     :value="overlay"
-    opacity="1"
-    id="anim"
+    :opacity="opacity"
   >
+    <div
+      id="anim"
+      :style="style"
+    />
   </v-overlay>
 </template>
 
 <script>
 import Lottie from 'lottie-web'
-import Cookie from 'vue-cookie'
-import * as animationData from '../assets/anims/teamfilm.json'
 
 export default {
-  name: 'anim',
+  props: {
+    name: {
+      type: String,
+      default: 'check'
+    },
+    width: Number,
+    height: Number,
+    speed: {
+      type: Number,
+      default: 1
+    },
+    opacity: {
+      type: Number,
+      default: 1
+    }
+  },
   data () {
     return {
       overlay: false,
-      anim: null
+      anim: null,
+      style: {
+        width: this.width ? `${this.width}px` : '100%',
+        height: this.height ? `${this.height}px` : '100%'
+      }
     }
   },
   watch: {
     paused (isPaused) {
       if (isPaused) {
         this.overlay = false
-        Lottie.stop()
+        Lottie.destroy()
+      }
+    },
+    state (play) {
+      if (play) {
+        this.play()
+        this.$store.commit(this.statename, false)
       }
     }
   },
   computed: {
     paused () {
       return this.anim ? this.anim.isPaused : null
+    },
+    state () {
+      return this.$store.getters[this.statename]
+    },
+    statename () {
+      return `anim${this.name}`
     }
   },
-  mounted () {
-    if (!Cookie.get('anim')) {
+  methods: {
+    play () {
       this.overlay = true
-      Cookie.set('anim', 'yeaaaaah', { expires: '1D' })
-      this.anim = Lottie.loadAnimation({
-        container: document.getElementById('anim'),
-        renderer: 'svg',
-        loop: false,
-        autoplay: false,
-        animationData: animationData.default
+      setTimeout(_ => {
+        this.anim = Lottie.loadAnimation({
+          container: document.getElementById('anim'),
+          renderer: 'svg',
+          loop: false,
+          autoplay: false,
+          path: `/anims/${this.name}.json`
+        })
+        Lottie.setSpeed(this.speed)
+        Lottie.play()
       })
-      Lottie.play()
     }
   }
 }
