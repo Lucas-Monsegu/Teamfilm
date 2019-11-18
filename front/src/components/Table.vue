@@ -13,21 +13,23 @@
           autofocus
           outlined
           shaped
-        ></v-text-field>
+        />
       </v-col>
-      <v-col>
-
-        <v-btn
-          class="mx-2"
-          small
-          outlined
-          dark
-          color="grey"
-          @click="getMovieList"
-        >
-          <v-icon>mdi-update</v-icon>
-        </v-btn>
-        <SearchMovie />
+      <v-col class="pl-0">
+        <v-tooltip bottom>
+          <template #activator="{ on }">
+            <v-btn
+              v-on="on"
+              icon
+              large
+              class="my-2"
+              @click="getMovieList"
+            >
+              <v-icon>mdi-reload</v-icon>
+            </v-btn>
+          </template>
+          Update films
+        </v-tooltip>
       </v-col>
     </v-row>
     <v-card>
@@ -69,15 +71,13 @@ import Genres from '@/components/Genres.vue'
 import Runtime from '@/components/Runtime.vue'
 import Rating from '@/components/Rating.vue'
 import Poster from '@/components/Poster.vue'
-import SearchMovie from '@/components/SearchMovie.vue'
 
 export default {
   components: {
     Genres,
     Runtime,
     Rating,
-    Poster,
-    SearchMovie
+    Poster
   },
   data () {
     return {

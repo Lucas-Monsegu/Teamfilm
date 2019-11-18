@@ -1,24 +1,28 @@
 <template>
   <v-dialog v-model="dialog">
-    <template v-slot:activator="{ on }">
-      <v-btn
-        v-on="on"
-        fab
-        small
-        dark
-        color="blue accent-2"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+    <template #activator="{ on: dialog }">
+      <v-tooltip bottom>
+        <template #activator="{ on: tooltip }">
+          <v-btn
+            v-on="{...dialog, ...tooltip}"
+            icon
+            @click="focus()"
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </template>
+        Add a film
+      </v-tooltip>
     </template>
     <v-autocomplete
+      ref="complete"
       v-model="select"
       :loading="loading"
       :items="items"
       :search-input.sync="search"
       hide-details
       label="What film do you wanna add ?"
-      no-data-text="No match"
+      hide-no-data
       item-text="title"
       item-value="id"
       solo
@@ -71,6 +75,9 @@ export default {
     }
   },
   methods: {
+    focus () {
+      setTimeout(_ => this.$refs['complete'].focus())
+    },
     add () {
       console.log('add')
     },

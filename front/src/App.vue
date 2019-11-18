@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <Anim />
     <Bar />
     <v-content id="content">
       <v-container fluid>
@@ -16,12 +17,14 @@
 
 <script>
 import Bar from './components/Bar.vue'
+import Anim from '@/components/Anim.vue'
 import axios from 'axios'
 
 export default {
   name: 'App',
   components: {
-    Bar
+    Bar,
+    Anim
   },
   created () {
     axios.interceptors.response.use(

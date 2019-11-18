@@ -1,73 +1,51 @@
 <template>
-  <div id="anim">
-    <v-overlay
-      :value="overlay"
-      opacity="1"
-    >
-      <lottie
-        :options="defaultOptions"
-        :height="800"
-        :width="800"
-        v-on:animCreated="handleAnimation"
-      />
-    </v-overlay>
-  </div>
+  <v-overlay
+    :value="overlay"
+    opacity="1"
+    id="anim"
+  >
+  </v-overlay>
 </template>
 
 <script>
-import Lottie from 'vue-lottie'
+import Lottie from 'lottie-web'
+import Cookie from 'vue-cookie'
 import * as animationData from '../assets/anims/teamfilm.json'
 
 export default {
   name: 'anim',
-  components: {
-    'lottie': Lottie
-  },
   data () {
     return {
       overlay: false,
-      defaultOptions: {
-        autoplay: true,
-        loop: false,
-        animationData: animationData.default
-      },
-      animationSpeed: 1
+      anim: null
+    }
+  },
+  watch: {
+    paused (isPaused) {
+      if (isPaused) {
+        this.overlay = false
+        Lottie.stop()
+      }
+    }
+  },
+  computed: {
+    paused () {
+      return this.anim ? this.anim.isPaused : null
     }
   },
   mounted () {
-    this.handleAnimation()
-    this.play()
-  },
-  methods: {
-    handleAnimation (anim) {
-      this.anim = anim
-      this.stop()
-      this.play()
-      console.log('handle')
-    },
-
-    stop () {
-      this.anim.stop()
-    },
-
-    play () {
+    if (!Cookie.get('anim')) {
       this.overlay = true
-      this.anim.play()
-    },
-
-    pause () {
-      this.anim.pause()
-    },
-
-    onSpeedChange () {
-      this.anim.setSpeed(this.animationSpeed)
+      Cookie.set('anim', 'yeaaaaah', { expires: '1D' })
+      this.anim = Lottie.loadAnimation({
+        container: document.getElementById('anim'),
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+        animationData: animationData.default
+      })
+      Lottie.play()
     }
   }
 }
 </script>
-
-<style>
-#anim {
-  position: fixed;
-}
-</style>

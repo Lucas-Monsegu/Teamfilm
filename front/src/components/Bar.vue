@@ -5,24 +5,26 @@
       dark
       dense
     >
-      <v-app-bar-nav-icon
-        to="/"
-        class="ma-0"
-      >
-        <v-icon>
-          mdi-video-vintage
-        </v-icon>
-      </v-app-bar-nav-icon>
-      <v-btn
-        icon
-        to="/about"
-      >
-        <v-icon>mdi-pine-tree</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template #activator="{ on }">
+          <v-app-bar-nav-icon
+            to="/"
+            class="ma-0"
+            v-on="on"
+          >
+            <v-icon>
+              mdi-video-vintage
+            </v-icon>
+          </v-app-bar-nav-icon>
+        </template>
+        Home
+      </v-tooltip>
 
       <v-toolbar-title class="pt-1">TeamFilm</v-toolbar-title>
 
       <v-spacer></v-spacer>
+
+      <SearchMovie />
 
       <v-btn
         tile
@@ -57,8 +59,12 @@
 
 <script>
 import login from '../utils/login'
+import SearchMovie from '@/components/SearchMovie.vue'
 
 export default {
+  components: {
+    SearchMovie
+  },
   methods: {
     login () {
       login(this.$route.path)
