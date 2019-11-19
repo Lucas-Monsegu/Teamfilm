@@ -11,10 +11,10 @@ const routes = [
     component: Home
   }
   // {
-  //   path: '/about',
+  //   path: '/:id',
   //   name: 'about',
   //   component: function () {
-  //     return import(/* webpackChunkName: "about" */ '../components/Genres.vue`')
+  //     return import(/* webpackChunkName: "about" */ '../components/Table.vue')
   //   }
   // }
 ]

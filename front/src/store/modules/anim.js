@@ -1,6 +1,7 @@
 const state = {
   animteamfilm: false,
-  animcheck: false
+  animcheck: false,
+  animfail: false
 }
 
 const mutations = {
@@ -9,6 +10,9 @@ const mutations = {
   },
   animcheck (state, b) {
     state.animcheck = b
+  },
+  animfail (state, b) {
+    state.animfail = b
   }
 }
 
@@ -21,6 +25,9 @@ const getters = {
   },
   animcheck (state) {
     return state.animcheck
+  },
+  animfail (state) {
+    return state.animfail
   }
 }
 

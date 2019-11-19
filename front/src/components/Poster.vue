@@ -4,6 +4,7 @@
     open-on-hover
     offset-x
     offset-y
+    offset-overflow
   >
     <template v-slot:activator="{ on }">
       <v-responsive

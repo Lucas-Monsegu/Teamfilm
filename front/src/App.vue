@@ -3,13 +3,23 @@
     <Animations />
     <Bar />
     <v-content id="content">
+      <v-img
+        src="/curtain.svg"
+        id="leftc"
+        class="curtain"
+      />
+      <v-img
+        src="/curtain.svg"
+        id="rightc"
+        class="curtain"
+      />
       <v-container fluid>
-        <v-scroll-x-reverse-transition
+        <v-fade-transition
           mode="out-in"
-          duration="300"
+          duration="150"
         >
           <router-view />
-        </v-scroll-x-reverse-transition>
+        </v-fade-transition>
       </v-container>
     </v-content>
   </v-app>
@@ -41,7 +51,7 @@ export default {
     this.$store.dispatch('auth')
   },
   mounted () {
-    if (Cookie.get('anim')) {
+    if (!Cookie.get('anim')) {
       Cookie.set('anim', 'yeaaaaah', { expires: '1D' })
       this.$store.commit('animteamfilm', true)
     }
@@ -51,10 +61,28 @@ export default {
 
 <style>
 html {
-  height: "100%";
+  height: 100%;
   overflow-y: auto !important;
 }
-/* .v-content__wrap {
-  background-color: #577280 !important;
-} */
+#app {
+  background: radial-gradient(
+    circle,
+    rgba(15, 51, 63, 1) 0%,
+    rgba(8, 8, 9, 1) 100%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+#leftc {
+  left: 0;
+}
+#rightc {
+  transform: scaleX(-1);
+  right: 0;
+}
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 225px;
+  height: 750px;
+}
 </style>

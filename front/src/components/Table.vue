@@ -13,6 +13,7 @@
           autofocus
           outlined
           shaped
+          dark
         />
       </v-col>
       <v-col class="pl-0">
@@ -25,7 +26,7 @@
               class="my-2"
               @click="getMovieList"
             >
-              <v-icon>mdi-reload</v-icon>
+              <v-icon color='white'>mdi-reload</v-icon>
             </v-btn>
           </template>
           Update films
@@ -66,7 +67,6 @@
 </template>
 
 <script>
-import fetch from '@/utils/fetch'
 import Genres from '@/components/Genres.vue'
 import Runtime from '@/components/Runtime.vue'
 import Rating from '@/components/Rating.vue'
@@ -81,7 +81,6 @@ export default {
   },
   data () {
     return {
-      loading: false,
       search: '',
       headers: [
         {
@@ -96,27 +95,26 @@ export default {
         { text: 'Release', value: 'release_date', sortable: true },
         { text: 'Language', value: 'language' },
         { text: 'Runtime', value: 'runtime' }
-      ],
-      films: []
+      ]
+    }
+  },
+  computed: {
+    films () {
+      return this.$store.getters.films
+    },
+    loading () {
+      return this.$store.getters.loading
     }
   },
   methods: {
-    add (e) {
-      console.log('add')
-    },
     goto (e) {
-      console.log('goto')
       this.$router.push(e.tmdb_id.toString())
     },
     getDate (dateString) {
       return new Date(dateString).getFullYear()
     },
-    async getMovieList () {
-      this.loading = true
-      const res = await fetch('get', '/get_list')
-      const json = await res.data
-      this.films = json
-      this.loading = false
+    getMovieList () {
+      this.$store.dispatch('getList')
     }
   },
   mounted () {

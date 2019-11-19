@@ -1,4 +1,4 @@
-import fetch from '@/utils/fetch'
+import myfetch from '@/utils/fetch'
 
 const state = {
   user: null
@@ -16,14 +16,14 @@ const mutations = {
 
 const actions = {
   auth (ctx) {
-    fetch('get', '/auth')
+    myfetch('get', '/auth')
       .then(res => {
         ctx.commit('auth', res.data)
       })
       .catch(_ => console.error)
   },
   logout (ctx) {
-    fetch('get', '/logout')
+    myfetch('get', '/logout')
       .then(ctx.commit('logout'))
       .catch(_ => console.error)
   }

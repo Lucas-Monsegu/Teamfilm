@@ -1,26 +1,26 @@
 <template>
   <div>
     <v-app-bar
-      color="teal darken-3"
+      color="#C32430"
       dark
       dense
     >
       <v-tooltip bottom>
         <template #activator="{ on }">
           <v-app-bar-nav-icon
-            to="/"
             class="ma-0"
             v-on="on"
+            @click="$router.push('/')"
           >
-            <v-icon>
-              mdi-video-vintage
-            </v-icon>
+            <v-icon>mdi-home</v-icon>
           </v-app-bar-nav-icon>
         </template>
         Home
       </v-tooltip>
 
-      <v-toolbar-title class="pt-1">TeamFilm</v-toolbar-title>
+      <v-toolbar-title class="mt-1">
+        TeamFilm
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -49,10 +49,14 @@
         </v-avatar>
       </v-btn>
       <v-btn
+        outlined
         v-else
         text
         @click="login"
-      >Sign in</v-btn>
+      >
+        Sign in
+        <v-icon right>mdi-login</v-icon>
+      </v-btn>
     </v-app-bar>
   </div>
 </template>

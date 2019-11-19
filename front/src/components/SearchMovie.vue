@@ -1,18 +1,16 @@
 <template>
   <v-dialog v-model="dialog">
-    <template #activator="{ on: dialog }">
-      <v-tooltip bottom>
-        <template #activator="{ on: tooltip }">
-          <v-btn
-            v-on="{...dialog, ...tooltip}"
-            icon
-            @click="focus()"
-          >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </template>
-        Add a film
-      </v-tooltip>
+    <template #activator="{ on }">
+      <v-btn
+        class="mr-2"
+        v-on="on"
+        outlined
+        text
+        @click="focus()"
+      >
+        Add film
+        <v-icon right>mdi-plus-circle-outline</v-icon>
+      </v-btn>
     </template>
     <v-autocomplete
       ref="complete"
@@ -28,7 +26,6 @@
       solo
       no-filter
       auto-select-first
-      @change="add"
     >
       <template v-slot:item="{ item }">
         <template>
@@ -55,10 +52,22 @@
         </template>
       </template>
     </v-autocomplete>
+    <v-row justify="center">
+      <v-btn
+        :loading="loadingadd"
+        :disabled="loadingadd"
+        color="indigo"
+        class="ma-2 white--text"
+        @click="add"
+      >
+        Add film<v-icon right>mdi-plus-circle-outline</v-icon>
+      </v-btn>
+    </v-row>
   </v-dialog>
 </template>
 
 <script>
+import myfetch from '../utils/fetch'
 export default {
   data () {
     return {
@@ -66,7 +75,8 @@ export default {
       loading: false,
       items: [],
       search: null,
-      select: null
+      select: '',
+      loadingadd: false
     }
   },
   watch: {
@@ -79,7 +89,23 @@ export default {
       setTimeout(_ => this.$refs['complete'].focus())
     },
     add () {
-      console.log('add')
+      this.loadingadd = true
+      myfetch('post', `/add_film/${this.select}`)
+        .then(_ => {
+          this.loadingadd = false
+          this.dialog = false
+          this.$store.commit('animcheck', true)
+        })
+        .catch(exception => {
+          this.loadingadd = false
+          this.dialog = false
+          console.log('Error while posting film: ', exception)
+          this.$store.commit('animfail', true)
+        })
+        .finally(_ => {
+          this.$store.dispatch('getList')
+          this.select = ''
+        })
     },
     async querySelections (v) {
       this.loading = true
@@ -91,3 +117,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#app > div.v-dialog__content.v-dialog__content--active > div {
+  box-shadow: none;
+}
+</style>

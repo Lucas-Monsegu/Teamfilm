@@ -1,16 +1,17 @@
 <template>
   <div>
-    <Anim
-      name="teamfilm"
-      :opacity="1"
-      :speed="1"
-    />
+    <Anim name="teamfilm" />
     <Anim
       :width="800"
       :height="800"
       name="check"
       :opacity="0.5"
-      :speed="1"
+    />
+    <Anim
+      :width="800"
+      :height="800"
+      name="fail"
+      :opacity="0.5"
     />
   </div>
 </template>
