@@ -4,7 +4,8 @@
     open-on-hover
     offset-x
     offset-y
-    offset-overflow
+    top
+    eager
   >
     <template v-slot:activator="{ on }">
       <v-responsive
@@ -19,10 +20,14 @@
       </v-responsive>
     </template>
 
-    <v-img
-      max-width="342"
-      :src="`https://image.tmdb.org/t/p/w342${path}`"
-    />
+    <div>
+      <v-img
+        :key="path"
+        eager
+        max-width="342"
+        :src="`https://image.tmdb.org/t/p/w342${path}`"
+      />
+    </div>
   </v-menu>
   <v-responsive
     v-else

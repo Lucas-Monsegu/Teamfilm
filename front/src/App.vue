@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <Snack />
     <Animations />
     <Bar />
     <v-content id="content">
@@ -30,12 +31,14 @@ import Bar from './components/Bar.vue'
 import axios from 'axios'
 import Cookie from 'vue-cookie'
 import Animations from '@/components/Animations.vue'
+import Snack from '@/components/Snack.vue'
 
 export default {
   name: 'App',
   components: {
     Bar,
-    Animations
+    Animations,
+    Snack
   },
   created () {
     axios.interceptors.response.use(
@@ -51,6 +54,13 @@ export default {
     this.$store.dispatch('auth')
   },
   mounted () {
+    if (this.$route.path === '/nwl') {
+      this.$store.commit('addSnack', {
+        text: 'You need to be whitelisted to sign in',
+        color: 'error'
+      })
+      this.$router.push('/')
+    }
     if (!Cookie.get('anim')) {
       Cookie.set('anim', 'yeaaaaah', { expires: '1D' })
       this.$store.commit('animteamfilm', true)

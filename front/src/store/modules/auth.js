@@ -19,12 +19,23 @@ const actions = {
     myfetch('get', '/auth')
       .then(res => {
         ctx.commit('auth', res.data)
+        ctx.commit('addSnack', {
+          text: 'Successfully signed in'
+        })
       })
       .catch(_ => console.error)
   },
   logout (ctx) {
     myfetch('get', '/logout')
-      .then(ctx.commit('logout'))
+      .then(_ => {
+        if (ctx.getters.loggedIn) {
+          ctx.commit('addSnack', {
+            text: 'You have been logged out',
+            color: 'info'
+          })
+        }
+        ctx.commit('logout')
+      })
       .catch(_ => console.error)
   }
 }
@@ -32,6 +43,9 @@ const actions = {
 const getters = {
   user (state) {
     return state.user
+  },
+  loggedIn (state) {
+    return state.user && Object.keys(state.user).length > 0
   }
 }
 

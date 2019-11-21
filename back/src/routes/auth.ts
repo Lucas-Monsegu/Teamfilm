@@ -18,13 +18,28 @@ router.get("/login",
 )
 
 // redirect
-router.get("/auth/redirect", passport.authenticate("discord"), (req, res) => {
-  if (req.session) {
-    res.redirect(req.session.returnTo || '/api/auth');
-    delete req.session.returnTo;
-  }
-  else
-    res.redirect('/api/auth')
+router.get("/auth/redirect", (req, res, next) => {
+  passport.authenticate('discord', function (err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function (err) {
+      if (req.session) {
+        const ret = req.session.returnTo
+        if (!ret) {
+          return res.redirect('/api/auth')
+        }
+        if (err) {
+          return res.redirect(`http://${ret.split('/')[2]}/nwl`)
+        }
+        else {
+          res.redirect(ret);
+          delete req.session.returnTo;
+        }
+      } else {
+        return res.redirect('/api/auth')
+      }
+    });
+  })(req, res, next);
 })
 
 // check

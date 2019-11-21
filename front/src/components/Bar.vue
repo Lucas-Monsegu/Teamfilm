@@ -42,7 +42,7 @@
       <v-btn
         icon
         class="ma-0"
-        v-else-if="Object.keys($store.getters.user).length > 0"
+        v-else-if="$store.getters.loggedIn"
       >
         <v-avatar>
           <v-img :src="$store.getters.user.avatar"></v-img>

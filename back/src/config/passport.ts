@@ -4,7 +4,7 @@ import User from "../models/user"
 import whitelist from "./whitelist"
 
 async function connect(profile: discordStrat.Profile, cb: any) {
-  if (!whitelist.includes(profile.id)) return cb(null, null)
+  if (!whitelist.includes(profile.id)) return cb(null, 'user not whitelisted')
   const user = await User.GetUserByDiscordId(profile.id)
   if (user) {
     return cb(null, user)

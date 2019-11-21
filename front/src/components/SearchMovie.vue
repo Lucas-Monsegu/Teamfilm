@@ -2,11 +2,22 @@
   <v-dialog v-model="dialog">
     <template #activator="{ on }">
       <v-btn
+        v-if="$store.getters.loggedIn"
         class="mr-2"
         v-on="on"
         outlined
         text
         @click="focus()"
+      >
+        Add film
+        <v-icon right>mdi-plus-circle-outline</v-icon>
+      </v-btn>
+      <v-btn
+        v-else
+        class="mr-2"
+        outlined
+        text
+        @click="gologin()"
       >
         Add film
         <v-icon right>mdi-plus-circle-outline</v-icon>
@@ -106,6 +117,12 @@ export default {
           this.$store.dispatch('getList')
           this.select = ''
         })
+    },
+    gologin () {
+      this.$store.commit('addSnack', {
+        text: 'You need to be signed in to add a film',
+        color: 'error'
+      })
     },
     async querySelections (v) {
       this.loading = true
