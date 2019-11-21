@@ -1,7 +1,15 @@
 <template>
-  <div class="home">
-    <Table />
-  </div>
+  <v-container fluid>
+    <v-row justify="center">
+      <v-col
+        xs="12"
+        lg="10"
+        xl="8"
+      >
+        <Table />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

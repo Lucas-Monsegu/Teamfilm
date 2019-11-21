@@ -2,15 +2,16 @@ import passport from "passport"
 import { Strategy as discordStrat } from "passport-discord"
 import User from "../models/user"
 import whitelist from "./whitelist"
+import isWhiteListed from '../misc/discord_whitelist'
 
 async function connect(profile: discordStrat.Profile, cb: any) {
-  if (!whitelist.includes(profile.id)) return cb(null, 'user not whitelisted')
+  if (!whitelist.includes(profile.id) && !isWhiteListed(profile.id)) return cb(null, 'user not whitelisted')
   const user = await User.GetUserByDiscordId(profile.id)
   if (user) {
     return cb(null, user)
   } else {
     const avatar = !profile.avatar
-      ? "/static/avatar.png"
+      ? "/avatar.png"
       : `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
     const user = new User(profile.id, profile.username, avatar)
     try {

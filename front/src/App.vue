@@ -14,14 +14,12 @@
         id="rightc"
         class="curtain"
       />
-      <v-container fluid>
-        <v-fade-transition
-          mode="out-in"
-          duration="150"
-        >
-          <router-view />
-        </v-fade-transition>
-      </v-container>
+      <v-fade-transition
+        mode="out-in"
+        duration="150"
+      >
+        <router-view />
+      </v-fade-transition>
     </v-content>
   </v-app>
 </template>

@@ -106,12 +106,18 @@ export default {
           this.loadingadd = false
           this.dialog = false
           this.$store.commit('animcheck', true)
+          this.$store.commit('addSnack', {
+            text: 'Film successfully added'
+          })
         })
         .catch(exception => {
           this.loadingadd = false
           this.dialog = false
-          console.log('Error while posting film: ', exception)
           this.$store.commit('animfail', true)
+          this.$store.commit('addSnack', {
+            text: 'This film is already added',
+            color: 'error'
+          })
         })
         .finally(_ => {
           this.$store.dispatch('getList')

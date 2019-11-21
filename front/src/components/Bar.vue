@@ -10,7 +10,7 @@
           <v-app-bar-nav-icon
             class="ma-0"
             v-on="on"
-            @click="$router.push('/')"
+            to="/"
           >
             <v-icon>mdi-home</v-icon>
           </v-app-bar-nav-icon>
@@ -18,9 +18,22 @@
         Home
       </v-tooltip>
 
-      <v-toolbar-title class="mt-1">
-        TeamFilm
-      </v-toolbar-title>
+      <v-tooltip
+        bottom
+        nudge-top="26"
+      >
+        <template #activator="{ on }">
+          <v-toolbar-title
+            class="mt-1"
+            @click="$store.commit('animteamfilm', true)"
+            v-on="on"
+            id="title"
+          >
+            TeamFilm
+          </v-toolbar-title>
+        </template>
+        Animate !
+      </v-tooltip>
 
       <v-spacer></v-spacer>
 
@@ -85,5 +98,8 @@ export default {
 .v-toolbar__title {
   font-family: "Palace";
   font-size: 4rem !important;
+}
+#title {
+  cursor: pointer;
 }
 </style>

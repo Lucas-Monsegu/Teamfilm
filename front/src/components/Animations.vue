@@ -8,8 +8,8 @@
       :opacity="0.5"
     />
     <Anim
-      :width="800"
-      :height="800"
+      :width="200"
+      :height="200"
       name="fail"
       :opacity="0.5"
     />

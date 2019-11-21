@@ -7,7 +7,6 @@ import passport from "./config/passport"
 import KeygripAutorotate from "keygrip-autorotate"
 
 export const app = express()
-
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 app.use(

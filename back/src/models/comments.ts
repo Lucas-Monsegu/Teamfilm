@@ -13,10 +13,13 @@ class Comment {
     }
   }
   static async AddComment(filmId: Number, message: String, rating: Number, userId: string): Promise<Boolean> {
-    const text = "INSERT INTO main.comment(film_id, user_id, message, rating) VALUES ($1, $2, $3, $4, $5);"
+    const text = "INSERT INTO main.comment(film_id, user_id, message, rating) VALUES ((SELECT id FROM main.film WHERE tmdb_id=$1), $2, $3, $4, $5)";
     const values = [filmId, userId, message, rating]
     try {
       const res = await Pool.query(text, values)
+      const updateText = "UPDATE main.film as F SET rating=(SELECT AVG(rating) from main.comment WHERE film_id=F.id) WHERE tmdb_id=$1;"
+      const updateValues = [filmId]
+      const updateRes = await Pool.query(updateText, updateValues)
       return true
     } catch (err) {
       console.error("error in GetMovieList", err.stack)
