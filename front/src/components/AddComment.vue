@@ -25,7 +25,16 @@
         </v-col>
         <v-divider vertical />
         <v-col>
-          hihi
+          <v-textarea
+            v-model="comment"
+            label="Comments"
+            auto-grow
+            outlined
+            rows="3"
+            color="#C32430"
+            row-height="25"
+            shaped
+          ></v-textarea>
         </v-col>
       </v-row>
     </v-card-text>
@@ -38,7 +47,8 @@ export default {
     return {
       dialog: false,
       loading: false,
-      rating: 0
+      rating: 0,
+      comment: null
     }
   },
   props: {

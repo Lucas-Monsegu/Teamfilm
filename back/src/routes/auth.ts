@@ -29,6 +29,7 @@ router.get("/auth/redirect", (req, res, next) => {
           return res.redirect('/api/auth')
         }
         if (err) {
+          console.log(err)
           return res.redirect(`http://${ret.split('/')[2]}/nwl`)
         }
         else {

@@ -15,7 +15,9 @@ async function connect(profile: discordStrat.Profile, cb: any) {
       : `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
     const user = new User(profile.id, profile.username, avatar)
     try {
+      console.log('start insert')
       const newUser = await user.CreateUserIntoDB()
+      console.log('end insert')
       return cb(null, newUser)
     } catch { }
   }
