@@ -1,73 +1,149 @@
 <template>
-  <v-card v-if="$store.getters.loggedIn">
-    <v-card-text class="py-0">
-      <v-row>
-        <v-col cols="auto">
-          <v-row justify="center">
-            <v-chip pill>
-              <v-avatar left>
-                <v-img :src="$store.getters.user.avatar" />
-              </v-avatar>
-              {{ $store.getters.user.name }}
-            </v-chip>
-          </v-row>
-          <v-row justify="center">
-            <v-rating
-              v-model="rating"
-              color="yellow darken-3"
-              background-color="grey darken-1"
-              half-increments
-              hover
-              clearable
-              dense
-            ></v-rating>
-          </v-row>
-        </v-col>
-        <v-divider vertical />
-        <v-col>
-          <v-textarea
-            v-model="comment"
-            label="Comments"
-            auto-grow
-            outlined
-            rows="3"
-            color="#C32430"
-            row-height="25"
-            shaped
-          ></v-textarea>
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <div>
+    <v-expansion-panels
+      inset
+      focusable
+      v-model="opened"
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          <template v-slot:default="{ open }">
+            <v-row
+              no-gutters
+              justify="center"
+            >
+              <v-col cols="auto">{{ myCom ? 'Edit your vote' : 'Make a vote' }}</v-col>
+            </v-row>
+          </template>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content pa-0>
+          <v-card-text class="pa-0">
+            <v-row
+              align="center"
+              class="ma-0"
+            >
+              <v-col cols="auto">
+                <v-row
+                  justify="center"
+                  align="center"
+                  dense
+                >
+                  <v-col cols="auto">
+                    <v-avatar size="40">
+                      <v-img
+                        class="elevation-6"
+                        :src="$store.getters.user.avatar"
+                      ></v-img>
+                    </v-avatar>
+                  </v-col>
+                  <v-col cols="auto">
+                    <span class="body-1">
+                      {{ $store.getters.user.name }}
+                    </span>
+                  </v-col>
+                </v-row>
+                <v-row
+                  justify="center"
+                  class='px-4'
+                >
+                  <v-rating
+                    v-model="rating"
+                    color="yellow darken-3"
+                    background-color="grey darken-1"
+                    half-increments
+                    hover
+                    clearable
+                    dense
+                  ></v-rating>
+                </v-row>
+              </v-col>
+              <v-divider vertical />
+              <v-col>
+                <v-textarea
+                  v-model="text"
+                  auto-grow
+                  outlined
+                  rows="3"
+                  hide-details
+                  color="#C32430"
+                  row-height="25"
+                  shaped
+                  ref="comment"
+                ></v-textarea>
+              </v-col>
+              <v-col
+                cols="auto"
+                class="pl-0"
+              >
+                <v-btn
+                  dark
+                  color="#C32430"
+                  fab
+                  small
+                  :loading="loading"
+                  :disabled="loading"
+                  @click="postComment"
+                >
+                  <v-icon>mdi-send</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </div>
 </template>
+
 <script>
 import myfetch from '../utils/fetch'
 export default {
   data () {
     return {
-      dialog: false,
       loading: false,
-      rating: 0,
-      comment: null
+      opened: false,
+      text: '',
+      rating: 0
     }
   },
   props: {
     filmId: Number
   },
+  watch: {
+    opened (val) {
+      if (val === 0) {
+        // setTimeout(_ => {
+        //   this.$refs['comment'].focus()
+        // }, 150)
+      }
+    },
+    myCom (val) {
+      if (val) {
+        this.text = val.message
+        this.rating = val.rating
+      }
+    }
+  },
+  computed: {
+    myCom () {
+      return this.$store.getters.comments.find(comment => comment.user_id === this.$store.getters.user.id)
+    }
+  },
   methods: {
-    postComment (rating, message) {
-      myfetch('post', '/add_comment', { 'filmId': this.filmId, 'text': message, 'rating': rating })
+    postComment () {
+      this.loading = true
+      const method = this.myCom ? 'patch' : 'post'
+      const path = this.myCom ? '/edit_comment' : '/add_comment'
+      myfetch(method, path, { 'filmId': this.filmId, 'text': this.text, 'rating': this.rating })
         .then(_ => {
-          this.loadingadd = false
-          this.dialog = false
+          this.loading = false
           this.$store.commit('animcheck', true)
           this.$store.commit('addSnack', {
             text: 'Comment successfully added'
           })
         })
         .catch(exception => {
-          this.loadingadd = false
-          this.dialog = false
+          this.loading = false
           this.$store.commit('animfail', true)
           this.$store.commit('addSnack', {
             text: 'Comment is already added',
@@ -78,3 +154,18 @@ export default {
   }
 }
 </script>
+
+<style>
+#content
+  > div
+  > div.container.container--fluid
+  > div:nth-child(2)
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div {
+  padding: 0;
+}
+</style>

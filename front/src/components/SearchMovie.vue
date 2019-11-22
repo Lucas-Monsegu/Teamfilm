@@ -66,10 +66,12 @@
     <v-row justify="center">
       <v-btn
         :loading="loadingadd"
+        v-show="select"
         :disabled="loadingadd"
-        color="indigo"
+        color="#C32430"
         class="ma-2 white--text"
         @click="add"
+        id="addfilm"
       >
         Add film<v-icon right>mdi-plus-circle-outline</v-icon>
       </v-btn>
@@ -86,7 +88,7 @@ export default {
       loading: false,
       items: [],
       search: null,
-      select: '',
+      select: null,
       loadingadd: false
     }
   },
@@ -121,7 +123,7 @@ export default {
         })
         .finally(_ => {
           this.$store.dispatch('getList')
-          this.select = ''
+          this.select = null
         })
     },
     gologin () {
@@ -144,5 +146,11 @@ export default {
 <style>
 #app > div.v-dialog__content.v-dialog__content--active > div {
   box-shadow: none;
+}
+#addfilm {
+  position: absolute;
+}
+#app > div.v-dialog__content.v-dialog__content--active > div {
+  overflow-y: hidden !important;
 }
 </style>

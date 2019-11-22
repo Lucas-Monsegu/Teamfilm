@@ -13,7 +13,8 @@ class User {
       const text =
         "INSERT INTO main.user(discord_id, name, avatar) VALUES($1, $2, $3) RETURNING *"
       try {
-        await Pool.query(text, values)
+        const res = await Pool.query(text, values)
+        this.id = res.rows[0].id
         return this
       } catch (err) {
         console.error(err.stack)
@@ -39,6 +40,28 @@ class User {
     } catch (err) {
       console.error("error in GetUserById", err.stack)
       return null
+    }
+  }
+  static async UpdateUserAvatar(id: Number, newAvatar: String): Promise<Boolean> {
+    const text = "UPDATE main.user SET avatar=$2 WHERE id=$1;"
+    const values = [id, newAvatar]
+    try {
+      const res = await Pool.query(text, values)
+      return true
+    }
+    catch{
+      return false
+    }
+  }
+  static async UpdateUserName(id: Number, newName: String): Promise<Boolean> {
+    const text = "UPDATE main.user SET name=$2 WHERE id=$1;"
+    const values = [id, newName]
+    try {
+      const res = await Pool.query(text, values)
+      return true
+    }
+    catch{
+      return false
     }
   }
   static async GetUserByDiscordId(id: string): Promise<User | null> {

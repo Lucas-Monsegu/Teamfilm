@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Vote from '../views/Vote.vue'
+import About from '../views/About.vue'
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/about',
+    name: 'about',
+    component: About
+  },
+  {
     path: '/:id',
     name: 'film',
     component: Vote
@@ -19,6 +25,7 @@ const routes = [
     //   return import(/* webpackChunkName: "about" */ '../components/Table.vue')
     // }
   }
+
 ]
 
 const router = new VueRouter({

@@ -2,7 +2,9 @@ import myfetch from '@/utils/fetch'
 
 const state = {
   films: [],
-  loading: false
+  loading: false,
+  rowsPerPage: 10,
+  comments: []
 }
 
 const mutations = {
@@ -11,6 +13,12 @@ const mutations = {
   },
   setLoading (state, loading) {
     state.loading = loading
+  },
+  setRowsPerPage (state, rowsPerPage) {
+    state.rowsPerPage = rowsPerPage
+  },
+  setComments (state, comments) {
+    state.comments = comments
   }
 }
 
@@ -23,6 +31,12 @@ const actions = {
     } catch (error) { } finally {
       ctx.commit('setLoading', false)
     }
+  },
+  async getComments (ctx, id) {
+    try {
+      const res = await myfetch('get', `/get_comments/${id}`)
+      ctx.commit('setComments', res.data)
+    } catch { }
   }
 }
 
@@ -32,6 +46,12 @@ const getters = {
   },
   loading (state) {
     return state.loading
+  },
+  rowsPerPage (state) {
+    return state.rowsPerPage
+  },
+  comments (state) {
+    return state.comments
   }
 }
 

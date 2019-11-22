@@ -3,6 +3,7 @@
     <Snack />
     <Animations />
     <Bar />
+    <div id="barspacer" />
     <v-content id="content">
       <v-img
         src="/curtain.svg"
@@ -92,5 +93,8 @@ html {
   top: 0;
   width: 225px;
   height: 750px;
+}
+#barspacer {
+  height: 48px;
 }
 </style>

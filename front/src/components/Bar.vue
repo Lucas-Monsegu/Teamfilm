@@ -4,6 +4,8 @@
       color="#C32430"
       dark
       dense
+      elevate-on-scroll
+      fixed
     >
       <v-tooltip bottom>
         <template #activator="{ on }">
@@ -24,7 +26,7 @@
       >
         <template #activator="{ on }">
           <v-toolbar-title
-            class="mt-1"
+            class="mt-1 font-weight-black pr-2"
             @click="$store.commit('animteamfilm', true)"
             v-on="on"
             id="title"
@@ -95,9 +97,13 @@ export default {
   font-family: "Palace";
   src: url("~@/assets/fonts/PalaceScriptMT.ttf");
 }
+@font-face {
+  font-family: "Blacksword";
+  src: url("~@/assets/fonts/Blacksword.otf");
+}
 .v-toolbar__title {
-  font-family: "Palace";
-  font-size: 4rem !important;
+  font-family: "Blacksword";
+  font-size: 2rem !important;
 }
 #title {
   cursor: pointer;

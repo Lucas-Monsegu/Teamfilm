@@ -15,7 +15,10 @@
               justify="center"
               align="start"
             >
-              <v-col cols="auto">
+              <v-col
+                cols="auto"
+                class="pb-0"
+              >
                 <v-img
                   eager
                   v-if="poster_path"
@@ -23,7 +26,7 @@
                   :src="`https://image.tmdb.org/t/p/w342${poster_path}`"
                 />
               </v-col>
-              <v-col>
+              <v-col class="pb-0">
                 <v-row
                   justify="space-between"
                   class="mb-3"
@@ -68,7 +71,10 @@
                   </v-card>
                 </v-row>
               </v-col>
-              <v-col cols="auto">
+              <v-col
+                cols="auto"
+                class="pb-0"
+              >
                 <v-card>
                   <v-divider light />
                   <v-card-title class="subtitle-1 d-block pb-0 text-truncate">
@@ -112,13 +118,29 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <v-row
+      justify="center"
+      v-if="$store.getters.loggedIn"
+    >
       <v-col
         xs="12"
         lg="10"
         xl="8"
       >
-        <AddComment :filmId="11324" />
+        <AddComment :filmId="id" />
+      </v-col>
+    </v-row>
+    <v-row
+      justify="center"
+      v-for="comment in $store.getters.comments"
+      :key="comment.id"
+    >
+      <v-col
+        xs="12"
+        lg="10"
+        xl="8"
+      >
+        <Comment :comment="comment" />
       </v-col>
     </v-row>
   </v-container>
@@ -126,15 +148,17 @@
 
 <script>
 import myfetch from '../utils/fetch'
-import Average from '@/components/Average.vue'
+import Average from '@/components/Average'
 import Genres from '@/components/Genres'
 import AddComment from '@/components/AddComment'
+import Comment from '@/components/Comment'
 
 export default {
   components: {
     Average,
     Genres,
-    AddComment
+    AddComment,
+    Comment
   },
   computed: {
     getDate () {
@@ -149,6 +173,9 @@ export default {
       return this.formatter.format(this.budget)
     },
     getRevenue () {
+      if (this.revenue <= 0) {
+        return 'Unknown'
+      }
       return this.formatter.format(this.revenue)
     }
   },
@@ -157,19 +184,20 @@ export default {
       const url = `https://api.themoviedb.org/3/movie/${this.id}?api_key=e59fb866a5c3211ad38d145410a3598b&language=en-US`
       const urlTeamFilm = `/get_movie/${this.id}`
       fetch(url).then(async res => {
-        let json = await res.json()
+        const json = await res.json()
         const arr = ['budget', 'revenue', 'vote_average', 'overview']
         arr.forEach(prop => {
           this[prop] = json[prop]
         })
       })
       myfetch('get', urlTeamFilm).then(res => {
-        let json = res.data
+        const json = res.data
         const arr = ['genres', 'rating', 'language', 'release_date', 'runtime', 'poster_path', 'title']
         arr.forEach(prop => {
           this[prop] = json[prop]
         })
       })
+      this.$store.dispatch('getComments', this.id)
     }
   },
   mounted () {
@@ -177,7 +205,7 @@ export default {
   },
   data () {
     return {
-      id: this.$route.params.id,
+      id: parseInt(this.$route.params.id),
       title: null,
       budget: null,
       revenue: null,

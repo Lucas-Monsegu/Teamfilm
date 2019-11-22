@@ -3,21 +3,28 @@ import { Strategy as discordStrat } from "passport-discord"
 import User from "../models/user"
 import whitelist from "./whitelist"
 import isWhiteListed from '../misc/discord_whitelist'
+import { serialize } from "v8"
 
 async function connect(profile: discordStrat.Profile, cb: any) {
   if (!whitelist.includes(profile.id) && !isWhiteListed(profile.id)) return cb(null, 'user not whitelisted')
   const user = await User.GetUserByDiscordId(profile.id)
+  const avatar = !profile.avatar
+    ? "/avatar.png"
+    : `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
   if (user) {
+    //check updates
+    const id = user.id ? user.id : 1
+    if (avatar !== user.avatar) {
+      User.UpdateUserAvatar(id, avatar)
+    }
+    if (profile.username !== user.name) {
+      User.UpdateUserAvatar(id, profile.username)
+    }
     return cb(null, user)
   } else {
-    const avatar = !profile.avatar
-      ? "/avatar.png"
-      : `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
     const user = new User(profile.id, profile.username, avatar)
     try {
-      console.log('start insert')
       const newUser = await user.CreateUserIntoDB()
-      console.log('end insert')
       return cb(null, newUser)
     } catch { }
   }

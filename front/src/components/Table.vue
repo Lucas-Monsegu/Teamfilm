@@ -41,6 +41,8 @@
         @click:row="goto"
         :loading="loading"
         :sort-by="['title']"
+        :items-per-page="$store.getters.rowsPerPage"
+        @update:items-per-page="e => $store.commit('setRowsPerPage', e)"
       >
         <template v-slot:item.genres="{ item }">
           <Genres :genres="item.genres" />
@@ -83,6 +85,7 @@ export default {
     Rating,
     Poster
   },
+
   data () {
     return {
       search: '',

@@ -32,23 +32,23 @@ export default {
       available_genres: {
         'Action': 'blue lighten-1',
         'Adventure': 'green lighten-1',
-        'Animation': 'deep-orange ',
-        'Comedy': 'deep-purple accent-2',
+        'Animation': 'deep-orange',
+        'Comedy': 'yellow darken-3',
         'Crime': 'red accent-4',
         'Documentary': 'indigo darken-1',
-        'Drama': 'lime darken-3',
-        'Family': 'red lighten-1',
+        'Drama': 'deep-purple accent-2',
+        'Family': 'light-green darken-2',
         'Fantasy': 'pink darken-1',
         'History': 'green darken-4',
         'Horror': 'grey darken-4',
-        'Music': 'purple accent-4',
-        'Mystery': 'blue-grey lighten-1',
+        'Music': 'pink accent-2',
+        'Mystery': '#8700FF',
         'Romance': 'red accent-3',
         'Science Fiction': 'light-blue darken-3',
         'TV Movie': 'brown darken-2`',
         'Thriller': 'teal darken-1',
         'War': 'grey darken-1',
-        'Western': 'yellow darken-4' }
+        'Western': '#AA5915' }
     }
   }
 }

@@ -8,8 +8,7 @@ router.get("/get_comments/:id", async (req, res) => {
   const list = await Comments.GetComments(parseInt(req.params.id))
   res.send(list)
 })
-
-router.post("/add_comment", checkAuth, (req, res) => {
+router.patch("/edit_comment", checkAuth, async (req, res) => {
   if (!['filmId', 'text', 'rating'].every(x => { return x in req.body })) {
     console.log(req.body, !['filmId', 'text', 'rating'].every(x => { return x in req.body }))
     return res.sendStatus(400)
@@ -17,7 +16,22 @@ router.post("/add_comment", checkAuth, (req, res) => {
   try {
     const body = req.body
     const user: any = req.user
-    const added = Comments.AddComment(body.filmId, body.message, body.rating, user.id)
+    const added = await Comments.EditComment(body.filmId, body.text, body.rating, user.id)
+    res.sendStatus(added ? 201 : 500)
+  }
+  catch (err) {
+    res.sendStatus(500)
+  }
+})
+router.post("/add_comment", checkAuth, async (req, res) => {
+  if (!['filmId', 'text', 'rating'].every(x => { return x in req.body })) {
+    console.log(req.body, !['filmId', 'text', 'rating'].every(x => { return x in req.body }))
+    return res.sendStatus(400)
+  }
+  try {
+    const body = req.body
+    const user: any = req.user
+    const added = await Comments.AddComment(body.filmId, body.text, body.rating, user.id)
     res.sendStatus(added ? 201 : 500)
   }
   catch (err) {

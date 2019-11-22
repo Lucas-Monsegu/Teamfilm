@@ -29,7 +29,6 @@ router.get("/auth/redirect", (req, res, next) => {
           return res.redirect('/api/auth')
         }
         if (err) {
-          console.log(err)
           return res.redirect(`http://${ret.split('/')[2]}/nwl`)
         }
         else {
@@ -48,7 +47,8 @@ router.get("/auth", checkAuth, noCache, (req, res) => {
   const user: any = req.user
   res.send({
     name: user.name,
-    avatar: user.avatar
+    avatar: user.avatar,
+    id: user.id
   })
 })
 
