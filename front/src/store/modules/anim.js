@@ -1,7 +1,8 @@
 const state = {
   animteamfilm: false,
   animcheck: false,
-  animfail: false
+  animfail: false,
+  delete: false
 }
 
 const mutations = {
@@ -13,11 +14,13 @@ const mutations = {
   },
   animfail (state, b) {
     state.animfail = b
+  },
+  animdelete (state, b) {
+    state.delete = b
   }
 }
 
-const actions = {
-}
+const actions = {}
 
 const getters = {
   animteamfilm (state) {
@@ -28,6 +31,9 @@ const getters = {
   },
   animfail (state) {
     return state.animfail
+  },
+  animdelete (state) {
+    return state.delete
   }
 }
 

@@ -13,6 +13,12 @@
       name="fail"
       :opacity="0.5"
     />
+    <Anim
+      :width="400"
+      :height="400"
+      name="delete"
+      :opacity="0.9"
+    />
   </div>
 </template>
 

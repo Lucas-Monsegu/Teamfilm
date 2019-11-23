@@ -41,7 +41,16 @@
                   align="center"
                   dense
                 >
+
                   <v-col cols="auto">
+                    <v-btn
+                      text
+                      icon
+                      color="#C32430"
+                      @click="deleteComment"
+                    >
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
                     <v-avatar size="40">
                       <v-img
                         class="elevation-6"
@@ -50,11 +59,14 @@
                     </v-avatar>
                   </v-col>
                   <v-col cols="auto">
+
                     <span class="body-1">
                       {{ $store.getters.user.name }}
+
                     </span>
                   </v-col>
                 </v-row>
+
                 <v-row
                   justify="center"
                   class='px-4'
@@ -88,6 +100,7 @@
                 cols="auto"
                 class="pl-0"
               >
+
                 <v-btn
                   dark
                   color="#C32430"
@@ -156,6 +169,21 @@ export default {
         this.text = myCom.message
         this.rating = myCom.rating
       }
+    },
+    deleteComment () {
+      myfetch('delete', '/delete_comment', { 'filmId': this.filmId }).then(_ => {
+        this.$store.commit('animdelete', true)
+        this.$store.commit('addSnack', {
+          text: 'Vote successfully deleted'
+        })
+        this.$store.dispatch('getComments', this.filmId)
+      }).catch(_ => {
+        this.$store.commit('animfail', true)
+        this.$store.commit('addSnack', {
+          text: 'Error while deleting',
+          color: 'error'
+        })
+      })
     },
     postComment () {
       this.loading = true
