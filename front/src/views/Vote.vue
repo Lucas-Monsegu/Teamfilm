@@ -1,8 +1,5 @@
 <template>
-  <v-container
-    fluid
-    :key="id"
-  >
+  <v-container fluid>
     <v-row justify="center">
       <v-col
         xs="12"
