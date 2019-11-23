@@ -12,7 +12,20 @@
               no-gutters
               justify="center"
             >
-              <v-col cols="auto">{{ myCom ? 'Edit your vote' : 'Make a vote' }}</v-col>
+              <v-col
+                cols="auto"
+                v-if="myCom"
+              >
+                Edit your vote
+                <v-icon>mdi-pencil</v-icon>
+              </v-col>
+              <v-col
+                cols="auto"
+                v-else
+              >
+                Make a vote
+                <v-icon>mdi-star</v-icon>
+              </v-col>
             </v-row>
           </template>
         </v-expansion-panel-header>
@@ -112,17 +125,24 @@ export default {
   watch: {
     opened (val) {
       if (val === 0) {
-        // setTimeout(_ => {
-        //   this.$refs['comment'].focus()
-        // }, 150)
-      }
-    },
-    myCom (val) {
-      if (val) {
-        this.text = val.message
-        this.rating = val.rating
+        this.edit()
+        setTimeout(_ => {
+          this.$refs['comment'].focus()
+        }, 100)
       }
     }
+    // myCom (val) {
+    //   if (val) {
+    //     this.text = val.message
+    //     this.rating = val.rating
+    //   }
+    // }
+    // },
+    // computed: {
+    //   myCom () {
+
+    //   }
+    // },
   },
   computed: {
     myCom () {
@@ -130,17 +150,26 @@ export default {
     }
   },
   methods: {
+    edit () {
+      const myCom = this.myCom
+      if (myCom) {
+        this.text = myCom.message
+        this.rating = myCom.rating
+      }
+    },
     postComment () {
       this.loading = true
       const method = this.myCom ? 'patch' : 'post'
       const path = this.myCom ? '/edit_comment' : '/add_comment'
+      const term = this.myCom ? 'edited' : 'added'
       myfetch(method, path, { 'filmId': this.filmId, 'text': this.text, 'rating': this.rating })
         .then(_ => {
           this.loading = false
           this.$store.commit('animcheck', true)
           this.$store.commit('addSnack', {
-            text: 'Comment successfully added'
+            text: `Vote successfully ${term}`
           })
+          this.$store.dispatch('getComments', this.filmId)
         })
         .catch(exception => {
           this.loading = false

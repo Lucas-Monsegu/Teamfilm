@@ -1,5 +1,8 @@
 <template>
-  <v-container fluid>
+  <v-container
+    fluid
+    :key="id"
+  >
     <v-row justify="center">
       <v-col
         xs="12"
@@ -8,7 +11,7 @@
       >
         <v-card>
           <v-card-title class="d-block text-center display-3">
-            {{ this.title }}
+            {{ this.title || 'Loading...'}}
           </v-card-title>
           <v-card-text>
             <v-row
@@ -24,7 +27,40 @@
                   v-if="poster_path"
                   max-width="342"
                   :src="`https://image.tmdb.org/t/p/w342${poster_path}`"
-                />
+                  lazy-src="https://picsum.photos/id/861/342/513"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+                <v-img
+                  eager
+                  v-else
+                  max-width="342"
+                  src="https://picsum.photos/id/861/342/513"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
               </v-col>
               <v-col class="pb-0">
                 <v-row
@@ -170,6 +206,9 @@ export default {
       return `${h}h${m}`
     },
     getBudget () {
+      if (this.budget <= 0) {
+        return 'Unknown'
+      }
       return this.formatter.format(this.budget)
     },
     getRevenue () {

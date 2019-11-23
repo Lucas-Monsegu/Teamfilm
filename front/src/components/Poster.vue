@@ -26,7 +26,21 @@
         eager
         max-width="342"
         :src="`https://image.tmdb.org/t/p/w342${path}`"
-      />
+        :lazy-src="`https://image.tmdb.org/t/p/w92${path}`"
+      >
+        <template v-slot:placeholder>
+          <v-row
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
     </div>
   </v-menu>
   <v-responsive

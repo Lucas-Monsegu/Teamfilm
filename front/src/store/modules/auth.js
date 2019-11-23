@@ -20,19 +20,24 @@ const actions = {
       .then(res => {
         ctx.commit('auth', res.data)
         ctx.commit('addSnack', {
-          text: 'Successfully signed in'
+          text: 'Successfully logged in'
         })
       })
       .catch(_ => console.error)
   },
-  logout (ctx) {
+  logout (ctx, intended) {
     myfetch('get', '/logout')
       .then(_ => {
         if (ctx.getters.loggedIn) {
-          ctx.commit('addSnack', {
-            text: 'You have been logged out',
-            color: 'info'
-          })
+          ctx.commit('addSnack',
+            intended
+              ? {
+                text: 'Successfully logged out'
+              }
+              : {
+                text: 'You have been logged out',
+                color: 'info'
+              })
         }
         ctx.commit('logout')
       })

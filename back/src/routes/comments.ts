@@ -17,6 +17,7 @@ router.patch("/edit_comment", checkAuth, async (req, res) => {
     const body = req.body
     const user: any = req.user
     const added = await Comments.EditComment(body.filmId, body.text, body.rating, user.id)
+    console.log('added', added)
     res.sendStatus(added ? 201 : 500)
   }
   catch (err) {

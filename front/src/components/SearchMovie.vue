@@ -6,7 +6,6 @@
         class="mr-2"
         v-on="on"
         outlined
-        text
         @click="focus()"
       >
         Add film
@@ -16,7 +15,6 @@
         v-else
         class="mr-2"
         outlined
-        text
         @click="gologin()"
       >
         Add film
@@ -38,6 +36,13 @@
       no-filter
       auto-select-first
     >
+      <template #append>
+        <v-img
+          max-width="100"
+          contain
+          src="https://www.themoviedb.org/assets/2/v4/logos/powered-by-rectangle-blue-61ce76f69ce1e4f68a6031d975df16cc184d5f04fa7f9f58ae6412646f2481c1.svg"
+        />
+      </template>
       <template v-slot:item="{ item }">
         <template>
           <v-list-item-avatar tile>
@@ -128,7 +133,7 @@ export default {
     },
     gologin () {
       this.$store.commit('addSnack', {
-        text: 'You need to be signed in to add a film',
+        text: 'You need to be logged in to add a film',
         color: 'error'
       })
     },

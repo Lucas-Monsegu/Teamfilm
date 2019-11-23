@@ -22,11 +22,11 @@
 
       <v-tooltip
         bottom
-        nudge-top="26"
+        nudge-top="2"
       >
         <template #activator="{ on }">
           <v-toolbar-title
-            class="mt-1 font-weight-black pr-2"
+            class="mt-1 font-weight-black px-2"
             @click="$store.commit('animteamfilm', true)"
             v-on="on"
             id="title"
@@ -41,35 +41,54 @@
 
       <SearchMovie />
 
-      <v-btn
-        tile
-        icon
-        class="ma-0"
-        v-if="!$store.getters.user"
-      >
+      <div v-if="!$store.getters.user">
         <v-avatar>
           <v-skeleton-loader
             ref="skeleton"
             type="avatar"
           ></v-skeleton-loader>
         </v-avatar>
-      </v-btn>
-      <v-btn
-        icon
-        class="ma-0"
-        v-else-if="$store.getters.loggedIn"
-      >
         <v-avatar>
-          <v-img :src="$store.getters.user.avatar"></v-img>
+          <v-skeleton-loader
+            ref="skeleton"
+            type="avatar"
+          ></v-skeleton-loader>
         </v-avatar>
-      </v-btn>
+      </div>
+      <div v-else-if="$store.getters.loggedIn">
+        <v-tooltip bottom>
+          <template #activator="{ on }">
+            <v-btn
+              icon
+              class="ma-0"
+              v-on="on"
+            >
+              <v-avatar>
+                <v-img :src="$store.getters.user.avatar"></v-img>
+              </v-avatar>
+            </v-btn>
+          </template>
+          {{ $store.getters.user.name }}
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template #activator="{ on }">
+            <v-btn
+              icon
+              v-on="on"
+              @click="$store.dispatch('logout', true)"
+            >
+              <v-icon>mdi-logout</v-icon>
+            </v-btn>
+          </template>
+          Log out
+        </v-tooltip>
+      </div>
       <v-btn
         outlined
         v-else
-        text
         @click="login"
       >
-        Sign in
+        Log in
         <v-icon right>mdi-login</v-icon>
       </v-btn>
     </v-app-bar>

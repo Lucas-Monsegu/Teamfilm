@@ -2,6 +2,7 @@
   <v-overlay
     :value="overlay"
     :opacity="opacity"
+    :z-index="10"
   >
     <div
       id="anim"

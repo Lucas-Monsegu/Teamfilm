@@ -48,7 +48,7 @@
           <Genres :genres="item.genres" />
         </template>
         <template v-slot:item.rating="{ item }">
-          <Rating />
+          <Rating :rating="item.rating" />
         </template>
         <template v-slot:item.runtime="{ item }">
           <Runtime :runtime="item.runtime" />
@@ -91,12 +91,12 @@ export default {
       search: '',
       headers: [
         { text: 'Title', value: 'title' },
-        { text: 'Poster', value: 'poster_path', sortable: false },
+        { text: 'Poster', value: 'poster_path', sortable: false, filterable: false },
         { text: 'Genres', value: 'genres', sortable: false },
-        { text: 'Rating', value: 'rating' },
+        { text: 'Rating', value: 'rating', filterable: false },
         { text: 'Release', value: 'release_date' },
         { text: 'Language', value: 'language' },
-        { text: 'Runtime', value: 'runtime' }
+        { text: 'Runtime', value: 'runtime', filterable: false }
       ]
     }
   },

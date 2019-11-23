@@ -27,7 +27,7 @@ class Comment {
     }
   }
   static async EditComment(filmId: Number, message: String, rating: Number, userId: String): Promise<Boolean> {
-    const text = "UPDATE main.comment SET message=$2, rating=$3 WHERE film_id=(SELECT id FROM main.film WHERE tmdb_id=$1) AND user_id=$4"
+    const text = "UPDATE main.comment SET message=$3, rating=$4 WHERE film_id=(SELECT id FROM main.film WHERE tmdb_id=$1) AND user_id=$2"
     const values = [filmId, userId, message, rating]
     try {
       const res = await Pool.query(text, values)

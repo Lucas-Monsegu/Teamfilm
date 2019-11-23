@@ -45,7 +45,7 @@ export default {
       error => {
         const status = error.response && error.response.status ? error.response.status : null
         if (status && status === 401) {
-          this.$store.dispatch('logout')
+          this.$store.dispatch('logout', false)
         }
         return Promise.reject(error)
       }
@@ -55,7 +55,7 @@ export default {
   mounted () {
     if (this.$route.path === '/nwl') {
       this.$store.commit('addSnack', {
-        text: 'You need to be whitelisted to sign in',
+        text: 'You need to be whitelisted to logged in',
         color: 'error'
       })
       this.$router.push('/')
