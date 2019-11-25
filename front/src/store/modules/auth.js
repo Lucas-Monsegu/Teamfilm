@@ -23,7 +23,7 @@ const actions = {
           text: 'Successfully logged in'
         })
       })
-      .catch(console.error)
+      .catch(console.error)// eslint-disable-line no-console
   },
   logout (ctx, intended) {
     myfetch('get', '/logout')
@@ -41,7 +41,7 @@ const actions = {
         }
         ctx.commit('logout')
       })
-      .catch(console.error)
+      .catch(console.error)// eslint-disable-line no-console
   }
 }
 
