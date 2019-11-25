@@ -160,7 +160,10 @@
         lg="10"
         xl="8"
       >
-        <AddComment :filmId="id" />
+        <AddComment
+          @update="updateRating"
+          :filmId="id"
+        />
       </v-col>
     </v-row>
     <v-row
@@ -216,9 +219,15 @@ export default {
     }
   },
   methods: {
+    updateRating () {
+      const urlTeamFilm = `/get_movie/${this.id}`
+      myfetch('get', urlTeamFilm).then(res => {
+        const json = res.data
+        this.rating = json.rating
+      })
+    },
     async GetTmdbDatas () {
       const url = `https://api.themoviedb.org/3/movie/${this.id}?api_key=e59fb866a5c3211ad38d145410a3598b&language=en-US`
-      const urlTeamFilm = `/get_movie/${this.id}`
       fetch(url).then(async res => {
         const json = await res.json()
         const arr = ['budget', 'revenue', 'vote_average', 'overview']
@@ -226,6 +235,7 @@ export default {
           this[prop] = json[prop]
         })
       })
+      const urlTeamFilm = `/get_movie/${this.id}`
       myfetch('get', urlTeamFilm).then(res => {
         const json = res.data
         const arr = ['genres', 'rating', 'language', 'release_date', 'runtime', 'poster_path', 'title']

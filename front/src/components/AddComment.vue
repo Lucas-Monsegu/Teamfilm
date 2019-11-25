@@ -177,12 +177,18 @@ export default {
           })
           this.$store.dispatch('getComments', this.filmId)
           this.opened = false
-        }).catch(_ => {
+          this.text = ''
+          this.rating = 0
+        })
+        .catch(_ => {
           this.$store.commit('animfail', true)
           this.$store.commit('addSnack', {
             text: 'Error while deleting',
             color: 'error'
           })
+        })
+        .finally(_ => {
+          this.$emit('update')
         })
     },
     postComment () {
@@ -198,6 +204,8 @@ export default {
             text: `Vote successfully ${term}`
           })
           this.opened = false
+          this.text = ''
+          this.rating = 0
           this.$store.dispatch('getComments', this.filmId)
         })
         .catch(exception => {
@@ -207,6 +215,9 @@ export default {
             text: 'Comment is already added',
             color: 'error'
           })
+        })
+        .finally(_ => {
+          this.$emit('update')
         })
     }
   }
