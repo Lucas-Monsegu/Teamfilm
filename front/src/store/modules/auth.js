@@ -23,7 +23,7 @@ const actions = {
           text: 'Successfully logged in'
         })
       })
-      .catch(_ => console.error)
+      .catch(console.error)
   },
   logout (ctx, intended) {
     myfetch('get', '/logout')
@@ -41,7 +41,7 @@ const actions = {
         }
         ctx.commit('logout')
       })
-      .catch(_ => console.error)
+      .catch(console.error)
   }
 }
 
