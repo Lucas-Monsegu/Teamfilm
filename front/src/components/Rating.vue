@@ -1,5 +1,6 @@
 <template>
   <v-rating
+    v-if="rating > -1"
     v-model="rating"
     color="yellow darken-3"
     background-color="grey darken-1"
@@ -7,6 +8,9 @@
     readonly
     dense
   ></v-rating>
+  <span v-else>
+    No votes
+  </span>
 </template>
 
 <script>
@@ -14,7 +18,7 @@ export default {
   props: {
     rating: {
       type: Number,
-      default: 0
+      default: -1
     }
   }
 }

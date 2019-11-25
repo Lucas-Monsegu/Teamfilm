@@ -24,6 +24,6 @@ app.use(passport.session())
 app.use("/api", misc)
 app.use("/api", auth)
 app.use("/api", commentRoutes)
-app.listen(3000, function () {
-  console.log("Backend listening on port 3000")
+app.listen(3001, function () {
+  console.log("Backend listening on port 3001")
 })
