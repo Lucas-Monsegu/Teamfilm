@@ -22,7 +22,7 @@
       <v-chip
         v-if="rating !== -1"
         small
-      >{{ rating }} / 5</v-chip>
+      >{{ Math.round(rating * 100) / 100 }} / 5</v-chip>
       <span v-else>
         No votes
       </span>
