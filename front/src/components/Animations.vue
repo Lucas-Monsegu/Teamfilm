@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Anim name="teamfilm" />
+    <Anim
+      :width="800"
+      :height="800"
+      name="teamfilm"
+    />
     <Anim
       :width="800"
       :height="800"
