@@ -109,7 +109,6 @@
                 class="pb-0"
               >
                 <v-card>
-                  <v-divider light />
                   <v-card-title class="subtitle-1 d-block pb-0 text-truncate">
                     Release date
                   </v-card-title>
