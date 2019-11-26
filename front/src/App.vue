@@ -91,8 +91,8 @@ html {
 .curtain {
   position: absolute;
   top: 0;
-  width: 225px;
-  height: 750px;
+  width: 11vw;
+  height: 37vw;
 }
 #barspacer {
   height: 48px;
