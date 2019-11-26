@@ -12,6 +12,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/nwl',
+    name: 'nwl',
+    component: Home
+  },
+  {
     path: '/:id',
     name: 'film',
     component: Vote

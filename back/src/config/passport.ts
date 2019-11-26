@@ -6,7 +6,7 @@ import isWhiteListed from '../misc/discord_whitelist'
 import { serialize } from "v8"
 
 async function connect(profile: discordStrat.Profile, cb: any) {
-  if (!whitelist.includes(profile.id) && !isWhiteListed(profile.id)) return cb(null, 'user not whitelisted')
+  if (!whitelist.includes(profile.id) && !await isWhiteListed(profile.id)) return cb(null, 'user not whitelisted')
   const user = await User.GetUserByDiscordId(profile.id)
   const avatar = !profile.avatar
     ? "/avatar.png"
