@@ -20,7 +20,7 @@ class Comment {
     try {
       const res = await Pool.query(text, values)
       const updateText =
-        "UPDATE main.film as F SET rating=coalesce((SELECT AVG(rating) from main.comment WHERE film_id=$1), -1.0) WHERE tmdb_id=$1;"
+        "UPDATE main.film as F SET rating=coalesce((SELECT AVG(rating) from main.comment WHERE film_id=F.id), -1.0) WHERE tmdb_id=$1;"
       const updateValues = [filmId]
       const updateRes = await Pool.query(updateText, updateValues)
       return true
