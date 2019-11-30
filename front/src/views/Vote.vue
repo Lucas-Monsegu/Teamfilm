@@ -189,6 +189,7 @@ import AddComment from '@/components/AddComment'
 import Comment from '@/components/Comment'
 
 export default {
+  name: 'vote',
   components: {
     Average,
     Genres,

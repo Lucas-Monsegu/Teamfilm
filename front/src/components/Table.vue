@@ -43,7 +43,6 @@
         :sort-by="['rating']"
         :sort-desc="[true]"
         must-sort
-        :items-per-page="$store.getters.rowsPerPage"
         @update:items-per-page="e => $store.commit('setRowsPerPage', e)"
       >
         <template v-slot:item.genres="{ item }">

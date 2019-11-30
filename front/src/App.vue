@@ -19,7 +19,9 @@
         mode="out-in"
         duration="150"
       >
-        <router-view />
+        <keep-alive include="home">
+          <router-view />
+        </keep-alive>
       </v-fade-transition>
     </v-content>
   </v-app>
