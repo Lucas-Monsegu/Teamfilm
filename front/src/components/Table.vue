@@ -120,7 +120,7 @@ export default {
       this.$store.dispatch('getList')
     }
   },
-  mounted () {
+  activated () {
     this.getMovieList()
   }
 }
