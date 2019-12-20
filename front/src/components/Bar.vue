@@ -63,7 +63,7 @@
               class="ma-0"
               v-on="on"
             >
-              <v-avatar>
+              <v-avatar size=40>
                 <v-img :src="$store.getters.user.avatar"></v-img>
               </v-avatar>
             </v-btn>
