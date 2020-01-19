@@ -1,0 +1,612 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS;
+CREATE ROLE teamfilm;
+ALTER ROLE teamfilm WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'md52f15f98a59f39e43fda1e995345739ac';
+
+
+
+
+
+
+--
+-- Databases
+--
+
+--
+-- Database "template1" dump
+--
+
+\connect template1
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+-- Dumped by pg_dump version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "postgres" dump
+--
+
+\connect postgres
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+-- Dumped by pg_dump version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "teamfilm" dump
+--
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+-- Dumped by pg_dump version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: teamfilm; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE teamfilm WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
+
+
+ALTER DATABASE teamfilm OWNER TO postgres;
+
+\connect teamfilm
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: main; Type: SCHEMA; Schema: -; Owner: teamfilm
+--
+
+CREATE SCHEMA main;
+
+
+ALTER SCHEMA main OWNER TO teamfilm;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: comment; Type: TABLE; Schema: main; Owner: teamfilm
+--
+
+CREATE TABLE main.comment (
+    id integer NOT NULL,
+    film_id integer NOT NULL,
+    user_id integer NOT NULL,
+    message text,
+    rating double precision NOT NULL
+);
+
+
+ALTER TABLE main.comment OWNER TO teamfilm;
+
+--
+-- Name: comment_id_seq; Type: SEQUENCE; Schema: main; Owner: teamfilm
+--
+
+CREATE SEQUENCE main.comment_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE main.comment_id_seq OWNER TO teamfilm;
+
+--
+-- Name: comment_id_seq; Type: SEQUENCE OWNED BY; Schema: main; Owner: teamfilm
+--
+
+ALTER SEQUENCE main.comment_id_seq OWNED BY main.comment.id;
+
+
+--
+-- Name: film; Type: TABLE; Schema: main; Owner: teamfilm
+--
+
+CREATE TABLE main.film (
+    id integer NOT NULL,
+    tmdb_id integer NOT NULL,
+    genres text[],
+    title text NOT NULL,
+    language text,
+    release_date date,
+    runtime integer NOT NULL,
+    poster_path text,
+    rating double precision NOT NULL
+);
+
+
+ALTER TABLE main.film OWNER TO teamfilm;
+
+--
+-- Name: film_id_seq; Type: SEQUENCE; Schema: main; Owner: teamfilm
+--
+
+CREATE SEQUENCE main.film_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE main.film_id_seq OWNER TO teamfilm;
+
+--
+-- Name: film_id_seq; Type: SEQUENCE OWNED BY; Schema: main; Owner: teamfilm
+--
+
+ALTER SEQUENCE main.film_id_seq OWNED BY main.film.id;
+
+
+--
+-- Name: user; Type: TABLE; Schema: main; Owner: teamfilm
+--
+
+CREATE TABLE main."user" (
+    id integer NOT NULL,
+    discord_id text NOT NULL,
+    name text NOT NULL,
+    avatar text NOT NULL
+);
+
+
+ALTER TABLE main."user" OWNER TO teamfilm;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE; Schema: main; Owner: teamfilm
+--
+
+CREATE SEQUENCE main.user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE main.user_id_seq OWNER TO teamfilm;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: main; Owner: teamfilm
+--
+
+ALTER SEQUENCE main.user_id_seq OWNED BY main."user".id;
+
+
+--
+-- Name: comment id; Type: DEFAULT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.comment ALTER COLUMN id SET DEFAULT nextval('main.comment_id_seq'::regclass);
+
+
+--
+-- Name: film id; Type: DEFAULT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.film ALTER COLUMN id SET DEFAULT nextval('main.film_id_seq'::regclass);
+
+
+--
+-- Name: user id; Type: DEFAULT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main."user" ALTER COLUMN id SET DEFAULT nextval('main.user_id_seq'::regclass);
+
+
+--
+-- Data for Name: comment; Type: TABLE DATA; Schema: main; Owner: teamfilm
+--
+
+COPY main.comment (id, film_id, user_id, message, rating) FROM stdin;
+14	49	23	Zero	0
+21	49	24	Pavu\n	0
+22	4	24	big revenue/budget ratio. good film.	4.5
+24	4	25		4
+26	51	22	Meilleur mindfuck de tous les temps.	5
+27	52	22	Un classique, coup au cerveau.	5
+28	53	22	Le film le plus sous-estimé qui existe, ambiance exceptionnelle et intrigue qui te fait réfléchir.	5
+23	42	24	Qui vit dans un ananas dans la mer ?\n\nPas némo	3.5
+29	54	22	Super film, horreur pas excessif et des détails exceptionnels quand on comprend ce qui s'est passé.	4.5
+30	55	22	La meilleure performance d'acteur que j'ai jamais vue.	4.5
+31	52	24	Fight Club fait l'apologie d'une critique puissante et complexe, sans délaisser le contexte des solutions in situ, d'une société névrosée et amok, mais Ô combien vériste. Cet antipode de l’allégorie de la caverne de Platon nous fait réaliser, ironiquement, du danger grandissant des plates-formes dîtes "de nuages" et autres structures d'apprentissage profond. Ce chef-d'œuvre restera sans aucun doute un fondement majeur de la vie de David Fincher. Comme a évoqué l'illustre Joseph Bédier au début de sa carrière, “le cinéma, c’est un œil ouvert sur le monde”.	5
+32	51	24	such wow	5
+33	53	24	Tout pareil.	5
+34	55	24	Horrible. 5/5	4.5
+25	4	22	Intéressant car principe unique, mais sans plus. Reste un bon film.	4
+35	56	22	Attachant mais reste une vengance classique sans plus.	3
+36	57	22	Belle biographie.	3.5
+37	58	22	Surprenamment touchant et belle musicalité.	4
+38	59	25		3
+39	60	25	film inutilement long et manque grandement d'actions	2
+43	61	26	"Super film, un des meilleurs que j'ai vu. Je me suis vraiment immergé dans l'univers du film." - IMDb Redactor	4.5
+44	62	26	En 4 mots : filmé avec un wiko	4
+48	63	23	Le scenario est excellent, on ne s'ennuit pas. A voir absolument	5
+52	60	24	Déçu, le 1 était bien mieux autant dans l'histoire que l'ambiance.	2.5
+53	64	24	Des plans interminables, une histoire lente et bancale. Le plot twist est ok mais sans plus. Le film garde quand même un intérêt pour aller voir Glass. +1/2 étoile pour Tropicana  	2
+56	66	22	Prenant, mais long et manque un peu d'intensité.	3
+57	66	28	Prenant, mais long et manque un peu d'intensité.	4
+58	66	24	Prenant, mais long et manque un peu d'intensité.	3.5
+59	66	23	Les acteurs sont excellents on ressent la tension dans les dialogues. En revanche quelques scènes me semble un peu longues mais cela reste un bon film.	3.5
+55	63	24		4
+60	54	23	Un très bon film d'horreur	4
+61	63	22	Fait réfléchir, tout ce qu'on aime.	4.5
+62	53	23	Je sais pas quoi dire à part regardez le sans hésiter.	5
+63	57	23		2.5
+64	51	29	Le film est pas mal, on s'ennuie pas trop, mais beaucoup de passages prévisibles, et une fin un peu décevante (sans doute parce que j'étais hypé)	3
+65	54	29	Un excellent film, un peu d'horreur sans trop en faire, une histoire prenante qui nous intrigue jusqu'au bout, pour finir avec une très bonne fin qui met en relation une multitude de détails disséminés tout au long du film.	5
+66	68	29	Nul. Il n'y a rien. Pas même un scénario ou une histoire. Après 1h30 de film, on attend toujours que l'histoire décolle ... sans savoir que ça n'arrivera jamais. Et c'est long, très long, très ennuyant, ... En résumé : nul.	0
+67	67	23	L'atmosphère est inquiétante et mystérieuse.	4
+78	71	23	Vraiment bien si vous aimez les mindfuck où pleins d'indices sont éparpillé pour les spectateurs capable de les remarquer	4.5
+69	60	23	Le scénario est mauvais selon moi car un peu prévisible et trop ressemblant au premier. 	2
+79	4	29	Le scénario est pas mal, le jeu d'acteur est bon, mais le film est assez long avec pas mal de passages ennuyeux. Assez mainstream. En somme, un bon film, sans plus.	3
+81	57	24	sympatrique 	3
+70	65	23	Les images sont belles. Voyez ce film plutôt comme un panorama car le scénario est mauvais et incohérent voir même insensé. Les dialogues sont creux j'ai ressentis aucune émotions.	0.5
+72	61	22	Un des seuls films sur le sujet de l'idyllique "utilisation à 100% du cerveau" qui ne dégoute pas. Va de paire avec la série, à regarder.	4.5
+73	62	22	Un tournage cheap qui ne fait qu'améliorer l'ambiance, un énorme wow.	5
+74	55	23	SPLIT > GLASS > INCASSABLE	4.5
+75	67	22	Ambiance vraiment prenante et film plein de rebondissements.	4
+76	64	23	Très bonne pub de Tropicana 	2
+77	65	29	Nul, jeu d'acteur absent, scénario absent, émotion absentes, bref ... il n'y a pas grand chose. Au moins, on a de beaux effets spéciaux, et de belles images, avec un sujet qui aurait pu être stylé.	0.5
+80	66	29	De bons acteurs, de bonnes scènes, mais de grosses longueurs. Cela manque un peu de punch.	3.5
+83	64	22	Très long. 2 points grâce à Glass.	2
+82	71	22	Je ne peux qu'être d'accord avec Luka ↑	4.5
+68	65	22	Je ne me rappelle pas exactement de combien de fois je me suis endormi, je dirais entre 10 et 15 fois.	1
+84	73	22	Bon film d'horreur, prenant et stressant comme il faut, et principe intéressant.	4
+85	68	24	La première fois que je l'ai vu j'ai cru que j'avais loupé l'histoire. Du coup je l'ai vu une 2nd fois. Je confirme, j'avais rien loupé.	1
+86	72	23	Sois un 5 sois un 0	4.5
+71	69	23	Ah on en fait plus des histoires comme ca	4
+87	59	23	C'est divertissant mais rien à de sens, c'est bien plus de la comédie que de l'horreur.	2.5
+88	73	23	Décevant.	2
+89	73	24	Angoisse/gore très bien dosé, une cohérence plutôt bonne pour un filme d'horreur. Parfois un peu brouillon, mais le fait que l'on s'y perdre rajoute un + à l'ambiance.	4
+90	74	23	Je recommande si vous ne connaissez pas déjà l'histoire.	4
+91	67	24	Très bonne ambiance	4
+92	74	24	Très bonne énigme, cohérente et bien montée.	4
+93	75	24	L'acteur principal a vraiment un style de malade	3
+94	75	22	Film lent qui reste une gemme par son humour parsemé ici et là.	3.5
+54	65	24	Aucune émotion, aucune cohérence, le seul intérêt du film sont ses images qui sont très belles. L'interstellar du pauvre	0.5
+95	93	23	C'est drôle, et ya de l'action voila	4
+96	94	23	Aussi frais que l'air de panache	4.5
+97	78	23	Ca se regarde	3.5
+98	88	23	Meilleur film coréen que j'ai vu	5
+99	84	23	Scénario un peu tiré par les cheveux ya de l'action, ca se regarde quand on veut poser son cerveaux.	3
+100	87	23	Très bon film d'horreur, regardez le plutôt que le 2.	4
+101	53	26	Très bon iflm	4.5
+102	95	23	Film avec des voyages dans le temps. Ne pas regarder le synopsis trop de spoil.	3
+103	95	27		2.5
+104	95	24	Le film est pas si mal, mais il y a mieux dans le même style: Prédestination, Un jour sans fin, Edge of Tomorrow...	3
+105	95	30	Sympa si on aime les diaporama les tacos et les sombrero mais un peu moins si on aime le cinéma. Commencez le film à 30 minutes si vous avez lu le synopsis.	2.5
+107	83	30	Tous les ferrus d'espace et de cinoche passeront un bon moment mais ce sera un plaisir coupable, un peu comme un pédophile devant une école maternelle.	3
+108	96	27	Il vaut mieux en rire qu'en pleurer	2
+106	96	23	Bon film a voir à plusieurs.	3
+109	97	23		4
+110	101	30	La crème du cinéma Québecois. Grand moment d'émotion.\n	5
+111	97	27	Un début un peu long mais le reste est un pur mindfuck	4.5
+112	55	25		5
+114	104	27	Des effets spéciaux dignes des années 1960, un des pires films dans son genre.	1.5
+115	105	27	Une énigme qui vous tient en haleine du début a la fin.	4.5
+113	103	27	Hormis une première partie de film intéressante avec un huit clos angoissant, ce film au scénario raté et au plot twist incompréhensible ne vaut pas le détour.            Conseil : arrêter de regarder après 20 minutes.	1.5
+116	71	27	Je ne peux qu'être d'accord avec Dayblox ↑	4.5
+117	104	23	c'est mauvais.	1.5
+118	107	25		4.5
+119	103	23	Ya presque un truc en vrai	2
+120	108	23	Le synopsis donne envie mais c'est juste un piege.	1
+121	81	23	C'est bien joué, bof drole et le scénario vaut pas grand chose mais bon ca divertit.	3
+122	109	27	Un scénario classique mais divertissant porté par un très bon Edward Norton	3.5
+123	76	23	Bof	2.5
+124	79	23	Les personnages sont stylés, le reste un peu moins	3
+125	79	27	Une des moins bonnes adaptation d'Agatha Christie, tout de même divertissant.	3
+126	4	28	Franchement, film dans son genre très bien réalisé, l'acteur est un AS, pour tous les fans de Batman: je recommande.	4.5
+127	4	23	Je recommande surtout si vous en avez marre de voir des films avec des gentils et des méchants. Dans celui-ci on se retrouve dans une situation ou les actions du joker sont justifié, prédictible et cohérentes. L'aspect psychologique est particulièrement réussi, on a l'impression de suivre le parcourt d'une vraie personne et non celle d'un personnage fictif.	4.5
+128	82	23	Rien d'extraordinaire mais ca reste bien fait	3.5
+129	49	28	Une belle perte de temps !	0
+130	77	23	MECHANT FRANCAIS BREXIT 	3
+131	88	28	Excellentissime, un film qui rentrera dans les classiques de l'histoire du cinéma coréen	5
+132	63	27		4
+133	80	23		3
+134	53	28	Très bon film à regarder entre potes, qui amène à une réflexion, les couleurs vives utilisées lors de la réalisation m'ont laissé sans voix, un délice pour les yeux, sans oublier l'excellent travail encore une fois de Joaquin Pheonix	5
+135	71	28	Je ne peux qu'être d'accord avec Findus ↑	4.5
+136	89	23	Le film est agréable et drole mais le scenario est assez simple avec peu de rebondissements. 	3
+137	51	28	Un grand classique dans le domaine du mindfuck, à la fin du film, vous serez bouche bée !	5
+138	82	28	Bonne réalisation, j'ai pris énormément de plaisir à regarder le film, une histoire classique mais très entraînante.	4
+139	78	28	Un film ok à regarder si vous avez du temps devant vous, une histoire bien trouvée mais une fin décevante, beaucoup de passages sont prédictibles.	3
+140	62	23	Le budget est Unknown mais sachez que le prix d'un wiko est de 150€	4.5
+141	85	23	Super effets speciaux	3.5
+142	110	28	L kAmiNo	1
+143	110	25	FIlm très lent, on a du mal a comprendre l'avancé de l'histoire \nPeu d'actions	2
+144	110	23	Ca s'appuie fortement sur la série. Si vous ne l'avez pas vu inutile de le regarder, vous ne pourrez pas vraiment comprendre la moitié des scènes.	2
+145	110	30	En bref, il s'agit d'un épilogue d'une série culte.  \nOn y sent l'envie de ne pas bâcler les choses, il n'y a pas de bouquet final, pas d'apothéose. Ici, on prendra le temps d'accompagner avec douceur et sérénité la série jusqu'à son dernier souffle, dernier souffle qui nous fera esquisser un sourire et nous permettra de conclure cette série d'un point final marqué de nostalgie, métaphore de la décennie qui se termine.\nAttention : y chercher autre chose que ce dont il est question : un épilogue ; sera cause de déception.	4
+146	111	25	Suspens incroyable sur le sexe de l'enfant	4
+147	111	22	Un poil long par moments et quelques points tirés par les cheveux, mais reste un beau film.	4
+148	111	28	Très bon film, un concept très bien abordé, un jeu d'acteur éblouissant. Et un teasing du sexe inédit.	4.5
+149	111	23	La premiere partie qui est un huis clot est captivante, la deuxieme partie un peu moins.	4
+150	88	25	Meilleur film de l'année 2019	5
+151	52	23	✔	5
+152	77	28	Un bon film pour ceux qui kiffent l'histoire	3.5
+153	75	23	Ya 4 moments drole mais c'est worth it	3.5
+154	96	28	Franchement 1 étoile de base, mais entre potes +2 tellement on se tape des barres\nSPOILER: Pariez sur celui qui mourra en dernier	3
+155	85	28	L'apogée de tous les marvels	3.5
+156	65	28	Une demi étoile pour les 10 premières minutes ou y a une chute plutôt stylée	0.5
+157	59	28	Raphael a dit: "Faut être un cinéphile pour apprécier ce film"; je ne suis que d'accord avec lui	2.5
+158	90	23	Bonne surprise	4
+159	52	28	Ca aurait été le premier film mindfuck que j'aurais vu, j'aurais sûrement mis un 5 étoiles, mais le problème, c'est que j'ai vu ce film très récemment et on est en 2019, cela reste néanmoins un très bon film, mais un vieux bon film	4.5
+160	112	28	NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL NUL\nPas besoin d'être constructif c'était nul	0
+161	101	25	J'ai pas accroché au film, trop d'éléments dérangeants selon moi 	3
+162	101	22	Beaucoup d'émotion, peut-être un peu long.	4.5
+163	101	23	Cameraman MVP	4.5
+164	101	28	Un film très émotionnel, qui ne peut être rater que si on range sa chambre en même temps. Un défi pouvant être réaliser pendant le film, essayer de comprendre le français québécois. Ne vous arrêter pas sur le format d'affichage du film, vous allez être surpris!	4.5
+165	113	30		3.5
+166	116	23	Tout est cliché et prévisible. C'est surement regardable avant 10 ans d'age mais pas au-delà.	1.5
+167	116	22	Pas mal d'incohérences qui affaiblissent l'émotion, mais reste un film correct.	3
+168	116	30	Seul intérêt du film (jvous le spoil comme ça vous avez gagné du temps) c'est de comprendre que la meuf pèse plus lourd que le porc. L'impression de m'être fait pissé de la bonne conscience dans la bouche, ça laisse un goût amer (de pisse). pipi caca prout.	2
+169	116	27	Éteignez votre ordinateur au plus vite pour réduire votre empreinte écologique	2
+170	116	25	Bel histoire d'amour entre une fille et son cochon \nUn peu perché et moralisateur faisant l'apologie du règne vegan 	3
+171	116	24	non	2.5
+172	88	22	Un chef d'oeuvre.	5
+173	4	27	Acteur principal incroyable et sujet original.	4.5
+174	112	27	Viol de mon enfance	0
+175	118	22	Pas eu peur, aucun sens.	1.5
+176	118	28	Film d'horreur qui fait pas peur, l'histoire est merdique, je n'ai ressenti que du dégoût après le film.	1
+177	118	23	Le film ne fais pas peur, le scenario est extrêmement nul et la fin décevante. 	1
+\.
+
+
+--
+-- Data for Name: film; Type: TABLE DATA; Schema: main; Owner: teamfilm
+--
+
+COPY main.film (id, tmdb_id, genres, title, language, release_date, runtime, poster_path, rating) FROM stdin;
+42	12	{Animation,Family}	Finding Nemo	en	2003-05-30	100	/syPWyeeqzTQIxjIUaIFI7d0TyEY.jpg	3.5
+56	322	{Thriller,Crime,Drama,Mystery}	Mystic River	en	2003-10-07	138	/qeHasONCKH5sR9HcTWquXI5ZN5y.jpg	3
+58	332562	{Drama,Romance,Music}	A Star Is Born	en	2018-10-03	136	/wrFpXMNBRj2PBiN4Z5kix51XaIZ.jpg	4
+73	157547	{Horror}	Oculus	en	2014-04-03	104	/ic8C94ylSfcoLkXqPOKzL6DqPcH.jpg	3.3333333333333335
+67	6947	{Drama,Mystery,Thriller}	The Village	en	2004-07-30	108	/v7UvYtKfIVaHLaHwVgfalyrK7Ho.jpg	4
+74	392044	{Crime,Drama,Mystery}	Murder on the Orient Express	en	2017-11-03	114	/iBlfxlw8qwtUS0R8YjIU7JtM6LM.jpg	4
+80	395992	{Horror,"Science Fiction",Thriller}	Life	en	2017-03-22	103	/h2mhfbEBGABSHo2vXG1ECMKAJa7.jpg	3
+82	396535	{Action,Horror,Thriller}	Train to Busan	ko	2016-07-20	118	/qWOkfCgioLEf3Km9OWva93RYWAc.jpg	3.75
+54	6537	{Horror,Drama,Thriller}	The Orphanage	es	2007-05-20	105	/3DMsF5gbTfEZoDp6fQH0QATOc7l.jpg	4.5
+85	299534	{Adventure,"Science Fiction",Action}	Avengers: Endgame	en	2019-04-24	181	/or06FN3Dka5tukK1e9sl16pB3iy.jpg	3.5
+4	475557	{Crime,Thriller,Drama}	Joker	en	2019-10-02	122	/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg	4.142857142857143
+66	398978	{Crime,History,Drama}	The Irishman	en	2019-11-01	209	/mbm8k3GFhXS0ROd9AD1gqYbIFbM.jpg	3.5
+60	474350	{Horror,Drama}	It Chapter Two	en	2019-09-04	169	/zfE0R94v1E8cuKAerbskfD3VfUt.jpg	2.1666666666666665
+75	582883	{Comedy,Crime,Drama}	Deerskin	fr	2019-06-19	77	/eMxMHfhiSiZCozPvvbLwMnjMAaG.jpg	3.3333333333333335
+89	490132	{Drama,Comedy}	Green Book	en	2018-11-16	130	/7BsvSuDQuoqhWmU2fL7W2GOcZHU.jpg	3
+88	496243	{Thriller,Drama,Comedy}	Parasite	ko	2019-05-30	132	/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg	5
+61	51876	{Thriller,Mystery,"Science Fiction"}	Limitless	en	2011-03-08	105	/bQfOFEeXxi51ijQrbQY9qvMtYhZ.jpg	4.5
+65	419704	{"Science Fiction"}	Ad Astra	en	2019-09-17	124	/lNnomQxXpRP9mgUwMuSZhA8LXfA.jpg	0.6
+97	2832	{Mystery,Thriller}	Identity	en	2003-04-25	90	/xSNSp2wmCUwFavxdkMF417hBc39.jpg	4.25
+57	266856	{Drama,Romance}	The Theory of Everything	en	2014-11-26	123	/4jspr8hLLuju59bCnMiefzRW4p0.jpg	3
+64	9741	{Thriller,Drama,Mystery}	Unbreakable	en	2000-11-13	106	/pvL37V88plePxFSszCbV3wRHiBm.jpg	2
+68	466272	{Drama,Comedy,Thriller}	Once Upon a Time... in Hollywood	en	2019-07-25	161	/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg	0.5
+49	428449	{Drama,Fantasy,Romance}	A Ghost Story	en	2017-04-24	93	/rp5JPIyZi9sMob15l46zNQLe5cO.jpg	0
+59	22970	{Horror,Comedy,Thriller}	The Cabin in the Woods	en	2012-04-12	95	/utfJuX6DfR28Mv2FMfnPFAYOmTU.jpg	2.6666666666666665
+91	50839	{Thriller,Drama}	Margin Call	en	2011-09-28	107	/h4Cv588VpNpO9twXsdorhz6K8t1.jpg	-1
+86	299536	{Adventure,Action,"Science Fiction"}	Avengers: Infinity War	en	2018-04-25	149	/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg	-1
+90	6145	{Thriller}	Fracture	en	2007-04-20	113	/sl5QYze20MclzDLxLDqe3sEJdiW.jpg	4
+93	2899	{Family,Fantasy,Comedy,Adventure}	Asterix & Obelix: Mission Cleopatra	fr	2002-01-29	108	/qWy5b64SoBXcMDdfgLyLZgIHSdv.jpg	4
+94	120467	{Comedy,Drama}	The Grand Budapest Hotel	en	2014-02-26	100	/nX5XotM9yprCKarRH4fzOq1VM1J.jpg	4.5
+62	220289	{Thriller,"Science Fiction"}	Coherence	en	2013-09-19	89	/8OIsK5Mlkieeqf5ejZOKFiyH5mM.jpg	4.5
+63	17431	{"Science Fiction",Drama}	Moon	en	2009-06-12	97	/2tgl9q3ZaVQUfSsbftqhRxXCElB.jpg	4.375
+84	429617	{Action,Adventure,"Science Fiction"}	Spider-Man: Far from Home	en	2019-06-28	129	/lcq8dVxeeOqHvvgcte707K0KVx5.jpg	3
+87	346364	{Horror}	It	en	2017-09-06	135	/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg	4
+71	26466	{Horror}	Triangle	en	2009-10-16	99	/hjC00Wus7IoCywVTHt68W8QxcyW.jpg	4.5
+95	14139	{"Science Fiction",Thriller}	Timecrimes	es	2007-10-05	92	/yaPwrv8c2ZKVHdUicUUnA9LvCCh.jpg	2.75
+83	274870	{Drama,Romance,"Science Fiction"}	Passengers	en	2016-12-21	116	/5gJkVIVU7FDp7AfRAbPSvvdbre2.jpg	3
+55	381288	{Horror,Thriller}	Split	en	2017-01-19	117	/rXMWOZiCt6eMX22jWuTOSdQ98bY.jpg	4.625
+81	287947	{Action,Comedy,Fantasy}	Shazam!	en	2019-03-23	132	/xnopI5Xtky18MPhK40cZAGAOVeV.jpg	3
+76	484468	{Thriller,Action}	The Wolf's Call	fr	2019-02-20	115	/8bxIzp9w9l9ZzGVwNaIKOaem05A.jpg	2.5
+78	455714	{Comedy,Drama,Crime}	Bad Genius	th	2017-05-03	130	/mgyvwqn5SYKhfg5kofZDfgH8R0q.jpg	3.25
+79	419835	{Drama,Mystery,Crime}	Crooked House	en	2017-10-31	115	/AewyKG2cvgZQBG4XU6SVomfu1k5.jpg	3
+72	347031	{Comedy,Drama,Romance,Fantasy,Adventure}	Swiss Army Man	en	2016-06-24	97	/9BdJz7b4WdJul0KVu42YFEgqzyp.jpg	4.5
+53	152601	{Romance,"Science Fiction",Drama}	Her	en	2013-12-18	126	/fsoTLnUXEUTNuVCBxAJMY0HPPd.jpg	4.9
+51	11324	{Drama,Thriller,Mystery}	Shutter Island	en	2010-02-14	138	/aZqKsvpJDFy2UzUMsdskNFbfkOd.jpg	4.5
+69	808	{Adventure,Animation,Comedy,Family,Fantasy}	Shrek	en	2001-05-16	90	/140ewbWv8qHStD3mlBDvvGd0Zvu.jpg	4
+77	504949	{Drama,History,War}	The King	en	2019-10-11	140	/8u0QBGUbZcBW59VEAdmeFl9g98N.jpg	3.25
+52	550	{Drama}	Fight Club	en	1999-10-15	139	/adw6Lq9FiC9zjYEpOqfq03ituwp.jpg	4.875
+115	374720	{War,Action,Drama}	Dunkirk	en	2017-07-19	107	/bOXBV303Fgkzn2K4FeKDc0O31q4.jpg	-1
+105	629	{Drama,Crime,Thriller}	The Usual Suspects	en	1995-07-19	106	/jgJoRWltoS17nD5MAQ1yK2Ztefw.jpg	4.5
+104	2675	{Drama,Thriller,"Science Fiction",Mystery}	Signs	en	2002-08-02	106	/bY9lCUVUajpkKWlfjWF1mtXaSUp.jpg	1.5
+107	184	{Crime,Thriller,Drama,Comedy}	Jackie Brown	en	1997-12-24	154	/4XVPYOdMAizdNMSwS0SK3fPJcvR.jpg	4.5
+103	19898	{Action,Horror,Mystery,"Science Fiction",Thriller}	Pandorum	en	2009-09-08	108	/qFd7dNvV1neXBV5OZdU5jOhdDZ6.jpg	1.75
+108	181886	{Thriller,Mystery}	Enemy	en	2013-12-31	91	/aQkyFHzNzZoMhxZ7c0IaK8BljED.jpg	1
+109	11371	{Action,Crime,Thriller,Mystery}	The Score	en	2001-07-13	124	/8d9HG9An0WOPNQywo99QyEptLHz.jpg	3.5
+110	559969	{Crime,Drama,Thriller}	El Camino: A Breaking Bad Movie	en	2019-10-11	123	/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg	2.25
+116	387426	{Adventure,Drama,"Science Fiction",Action}	Okja	en	2017-06-28	122	/pHlRr2MfjK77VIIAO7p0R4jhsJI.jpg	2.3333333333333335
+112	2486	{Fantasy,Action,Adventure,Family}	Eragon	en	2006-12-14	104	/5YOPiILsHw2Onsqyev9IYhSZ4Vy.jpg	0
+117	181812	{Action,Adventure,"Science Fiction"}	Star Wars: The Rise of Skywalker	en	2019-12-18	142	/db32LaOibwEliAmSL2jjDF6oDdj.jpg	-1
+111	264644	{Drama,Thriller}	Room	en	2015-10-16	117	/eqFckcHuFCT1FrzLOAvXBb4jHwq.jpg	4.125
+96	5876	{Horror,"Science Fiction",Thriller}	The Mist	en	2007-11-21	126	/uYVheUBf8ITaocUP4Og9GXxOMIH.jpg	2.6666666666666665
+118	310131	{Mystery,Horror}	The Witch	en	2015-11-11	92	/cNNK6OHWNJdvIgWceV0iK83MPbb.jpg	1.1666666666666667
+101	265177	{Drama}	Mommy	en	2014-05-22	138	/tpoaLlY0ZdVGDLToVwkGdWxLHRe.jpg	4.3
+113	110415	{Action,"Science Fiction",Drama}	Snowpiercer	ko	2013-08-01	127	/oP0ZWr6MsaQ1TV7xvnZJMKSfz0H.jpg	3.5
+\.
+
+
+--
+-- Data for Name: user; Type: TABLE DATA; Schema: main; Owner: teamfilm
+--
+
+COPY main."user" (id, discord_id, name, avatar) FROM stdin;
+22	185407146974904320	Dayblox	https://cdn.discordapp.com/avatars/185407146974904320/f3617c9657440d942543b2e1de50b82d.png
+23	214378496087162880	Luka	/avatar.png
+24	184404489103474688	Itectori	https://cdn.discordapp.com/avatars/184404489103474688/6d9a785de5123202fe69b61faff5bd64.png
+25	143007446850338816	Kzenn	https://cdn.discordapp.com/avatars/143007446850338816/60ef6400d1d20ce2e1d3ac1d980ca359.png
+26	212319525968936960	Aminok	https://cdn.discordapp.com/avatars/212319525968936960/df7fa916275591e6aa5fe506474167b6.png
+27	284068567576477697	Findus	https://cdn.discordapp.com/avatars/284068567576477697/b74bb0153e4223801fada5dac2b952df.png
+28	221032130585690112	Retsila	https://cdn.discordapp.com/avatars/221032130585690112/f1959dd82f2dcf9170d239f64d903b9d.png
+29	273495442950717442	Jilowyn	https://cdn.discordapp.com/avatars/273495442950717442/ed483dac8a4f58711cb92c733659140d.png
+30	111191042975412224	Farrhell	https://cdn.discordapp.com/avatars/111191042975412224/2cb7dde549beb8fd59aea3f3ab4c10ab.png
+\.
+
+
+--
+-- Name: comment_id_seq; Type: SEQUENCE SET; Schema: main; Owner: teamfilm
+--
+
+SELECT pg_catalog.setval('main.comment_id_seq', 177, true);
+
+
+--
+-- Name: film_id_seq; Type: SEQUENCE SET; Schema: main; Owner: teamfilm
+--
+
+SELECT pg_catalog.setval('main.film_id_seq', 118, true);
+
+
+--
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: main; Owner: teamfilm
+--
+
+SELECT pg_catalog.setval('main.user_id_seq', 30, true);
+
+
+--
+-- Name: comment comment_film_id_user_id_key; Type: CONSTRAINT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.comment
+    ADD CONSTRAINT comment_film_id_user_id_key UNIQUE (film_id, user_id);
+
+
+--
+-- Name: comment comment_pkey; Type: CONSTRAINT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.comment
+    ADD CONSTRAINT comment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: film film_pkey; Type: CONSTRAINT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.film
+    ADD CONSTRAINT film_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: film tmdb_id; Type: CONSTRAINT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.film
+    ADD CONSTRAINT tmdb_id UNIQUE (tmdb_id);
+
+
+--
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main."user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comment comment_film_id_fkey; Type: FK CONSTRAINT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.comment
+    ADD CONSTRAINT comment_film_id_fkey FOREIGN KEY (film_id) REFERENCES main.film(id);
+
+
+--
+-- Name: comment comment_user_id_fkey; Type: FK CONSTRAINT; Schema: main; Owner: teamfilm
+--
+
+ALTER TABLE ONLY main.comment
+    ADD CONSTRAINT comment_user_id_fkey FOREIGN KEY (user_id) REFERENCES main."user"(id) NOT VALID;
+
+
+--
+-- Name: DATABASE teamfilm; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT CONNECT ON DATABASE teamfilm TO teamfilm;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
