@@ -5,10 +5,8 @@ import auth from "./routes/auth"
 import cookie from "cookie-session"
 import passport from "./config/passport"
 import KeygripAutorotate from "keygrip-autorotate"
-import Cors from "cors";
 
 export const app = express()
-app.use(Cors());
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 app.use(
