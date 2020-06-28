@@ -9,11 +9,11 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
-  modules: {
-    auth,
-    anim,
-    films,
-    snack
-  },
-  strict: debug
+    modules: {
+        auth,
+        anim,
+        films,
+        snack
+    },
+    strict: debug
 })
