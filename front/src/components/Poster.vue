@@ -68,7 +68,6 @@ export default {
     },
     methods: {
         errorImage (errorCode) {
-            console.log('dispatching')
             this.$store.dispatch('updatePoster', this.id)
         }
     }

@@ -17,7 +17,6 @@
 export default {
     methods: {
         click () {
-            console.log(this.opened)
             if (this.opened) {
                 return
             }
