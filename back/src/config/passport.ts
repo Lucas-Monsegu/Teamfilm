@@ -46,7 +46,7 @@ passport.use(
       clientSecret: "kmsA5_ufU0PrZ442RZTxBv_Ya9SMvMKa",
       callbackURL: "/api/auth/redirect"
     },
-    (accessToken, refreshToken, profile, cb) => connect(profile, cb)
+    (accessToken:any, refreshToken:any, profile:any, cb:any) => connect(profile, cb)
   )
 )
 

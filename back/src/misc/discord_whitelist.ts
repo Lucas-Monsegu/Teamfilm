@@ -22,6 +22,9 @@ async function isWhiteListed(discordId: string): Promise<Boolean> {
 
   const member = await guild.fetchMember(user)
 
+
+  console.log(member.roles)
+  console.log(member.roles.some((el: any) => el.id === "647170190341308421"))
   return member.roles.some((el: any) => el.id === "647170190341308421")
 }
 
