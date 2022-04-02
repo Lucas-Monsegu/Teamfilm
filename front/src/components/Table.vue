@@ -42,7 +42,7 @@
                 :loading="loading"
                 :sort-by="['rating']"
                 :sort-desc="[true]"
-                items-per-page="10"
+                items-per-page="50"
                 must-sort
                 @update:items-per-page="e => $store.commit('setRowsPerPage', e)"
             >

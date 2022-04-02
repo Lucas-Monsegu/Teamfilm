@@ -7,35 +7,22 @@
             elevate-on-scroll
             fixed
         >
-            <v-tooltip bottom>
-                <template #activator="{ on }">
-                    <v-app-bar-nav-icon
-                        class="ma-0"
-                        v-on="on"
-                        to="/"
-                    >
-                        <v-icon>mdi-home</v-icon>
-                    </v-app-bar-nav-icon>
-                </template>
-                Home
-            </v-tooltip>
-
-            <v-tooltip
-                bottom
-                nudge-top="2"
+            <v-app-bar-nav-icon
+                class="ma-0"
+                v-on="on"
+                to="/"
             >
-                <template #activator="{ on }">
-                    <v-toolbar-title
-                        class="mt-1 font-weight-black px-2"
-                        @click="$store.commit('animteamfilm', true)"
-                        v-on="on"
-                        id="title"
-                    >
-                        TeamFilm
-                    </v-toolbar-title>
-                </template>
-                Animate !
-            </v-tooltip>
+                <v-icon>mdi-home</v-icon>
+            </v-app-bar-nav-icon>
+
+            <v-toolbar-title
+                class="mt-1 font-weight-black px-2"
+                to="/"
+                v-on="on"
+                id="title"
+            >
+                TeamFilm
+            </v-toolbar-title>
 
             <v-spacer></v-spacer>
 

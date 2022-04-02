@@ -1,5 +1,7 @@
 <template>
     <v-app>
+        <div id="bg"></div>
+
         <Snack />
         <Animations />
         <Bar />
@@ -75,14 +77,6 @@ html {
     height: 100%;
     overflow-y: auto !important;
 }
-#app {
-    background: radial-gradient(
-        circle,
-        rgba(15, 51, 63, 1) 0%,
-        rgba(8, 8, 9, 1) 100%,
-        rgba(0, 0, 0, 1) 100%
-    );
-}
 #leftc {
     left: 0;
 }
@@ -90,8 +84,20 @@ html {
     transform: scaleX(-1);
     right: 0;
 }
+#bg{
+    position: fixed;
+    top:0%;
+    width:100vw;
+    height:100vh;
+    background: radial-gradient(
+        circle,
+        rgba(15, 51, 63, 1) 0%,
+        rgba(8, 8, 9, 1) 100%,
+        rgba(0, 0, 0, 1) 100%
+    );
+}
 .curtain {
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 11vw;
     height: 37vw;
