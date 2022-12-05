@@ -1,11 +1,14 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import express from "express"
 import misc from "./routes/film"
 import commentRoutes from "./routes/comments"
 import auth from "./routes/auth"
 import cookie from "cookie-session"
 import passport from "./config/passport"
-import KeygripAutorotate from "keygrip-autorotate"
 import cors from 'cors'
+
 
 export const app = express()
 app.use(cors());
@@ -15,10 +18,7 @@ app.use(
     cookie({
         name: "rand",
         maxAge: 24 * 60 * 60 * 1000,
-        keys: new KeygripAutorotate({
-            totalSecrets: 10,
-            ttlPerSecret: 24 * 60 * 60 * 1000
-        })
+        keys: ['a', 'b']
     })
 )
 app.use(passport.initialize())

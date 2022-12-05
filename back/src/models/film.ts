@@ -1,5 +1,8 @@
 import Pool from "./pg"
-import fetch from "node-fetch"
+import { RequestInfo, RequestInit } from 'node-fetch';
+
+const fetch = (url: RequestInfo, init?: RequestInit) =>
+    import('node-fetch').then(({ default: fetch }) => fetch(url, init));
 
 class Film {
     // id: number | null = null
@@ -42,7 +45,7 @@ class Film {
         try {
             json = await res.json()
         }
-        catch{
+        catch {
             return false
         }
         const values = [tmdbId, json.poster_path]
@@ -65,7 +68,7 @@ class Film {
         try {
             json = await res.json()
         }
-        catch{
+        catch {
             return false
         }
         const genres = json.genres.map((obj: any) => obj.name)

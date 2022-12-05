@@ -1,11 +1,11 @@
 import passport from "passport"
-import { Router } from "express"
+import { Router, Request, Response } from "express"
 import { checkAuth, noCache, saveReturnTo } from "./middlewares"
 const router = Router()
 
 // logout
-router.get("/logout", (req, res) => {
-    req.logout()
+router.get("/logout", (req: Request, res: Response) => {
+    req.logOut(() => { })
     return res.send("Logged out")
 })
 
