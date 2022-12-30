@@ -22,8 +22,9 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
-    "start": "ts-node src/",
-    "build": "tsc build src"
+    "dev": "ts-node src/",
+    "build": "tsc src",
+    "start": "node build"
   },
   "devDependencies": {
     "@types/connect-history-api-fallback": "^1.3.3",
