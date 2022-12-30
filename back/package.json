@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "ts-node src/",
-    "build": "tsc src",
+    "build": "tsc",
     "start": "node build"
   },
   "devDependencies": {
