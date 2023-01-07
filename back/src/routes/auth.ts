@@ -24,6 +24,7 @@ router.get("/auth/redirect", (req, res, next) => {
         if (err) { return next(err); }
         if (!user) { return res.redirect('/login'); }
         req.logIn(user, function (err) {
+            console.log(user, err)
             if (req.session) {
                 if (!ret) {
                     return res.redirect('/api/auth')
@@ -32,8 +33,9 @@ router.get("/auth/redirect", (req, res, next) => {
                     return res.redirect(`http://${ret.split('/')[2]}/nwl`)
                 }
                 else {
-                    res.redirect(ret)
+                    const a = res.redirect(ret)
                     delete req.session.returnTo;
+                    return a
                 }
             } else {
                 return res.redirect('/api/auth')
