@@ -44,7 +44,7 @@ passport.use(
     {
       clientID: "645307699902414872",
       clientSecret: "kmsA5_ufU0PrZ442RZTxBv_Ya9SMvMKa",
-      callbackURL: "/api/auth/redirect"
+      callbackURL: "https://teamfilm.up.railway.app/api/auth/redirect"
     },
     (accessToken: any, refreshToken: any, profile: any, cb: any) => connect(profile, cb)
   )

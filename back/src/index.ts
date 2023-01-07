@@ -17,7 +17,6 @@ declare module 'express-session' {
 }
 
 export const app = express()
-app.enable("trust proxy");
 app.use(cookieParser());
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
