@@ -32,7 +32,7 @@ router.get("/auth/redirect", (req, res, next) => {
                     return res.redirect(`http://${ret.split('/')[2]}/nwl`)
                 }
                 else {
-                    return res.redirect('http://localhost:8080')
+                    res.redirect(ret)
                     delete req.session.returnTo;
                 }
             } else {
