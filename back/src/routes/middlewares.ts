@@ -13,8 +13,8 @@ export const noCache = (req: Request, res: Response, next: NextFunction) => {
 }
 
 export const saveReturnTo = (req: Request, res: Response, next: NextFunction) => {
-  if (req.query.return && req.session) {
-    req.session.returnTo = req.query.return
+  if (req.query.return && req.cookies) {
+    req.session.returnTo = req.headers.referer
   }
   next()
 }

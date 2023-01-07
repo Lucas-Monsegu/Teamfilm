@@ -31,12 +31,12 @@ async function connect(profile: discordStrat.Profile, cb: any) {
 }
 
 passport.serializeUser((user: User, done) => {
-  done(null, user.id)
+  return done(null, user.id)
 })
 
 passport.deserializeUser(async (id: number, done) => {
   const user = await User.GetUserById(id)
-  done(null, user)
+  return done(null, user)
 })
 
 passport.use(
@@ -46,7 +46,7 @@ passport.use(
       clientSecret: "kmsA5_ufU0PrZ442RZTxBv_Ya9SMvMKa",
       callbackURL: "/api/auth/redirect"
     },
-    (accessToken:any, refreshToken:any, profile:any, cb:any) => connect(profile, cb)
+    (accessToken: any, refreshToken: any, profile: any, cb: any) => connect(profile, cb)
   )
 )
 

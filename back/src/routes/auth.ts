@@ -13,18 +13,18 @@ router.get("/logout", (req: Request, res: Response) => {
 router.get("/login",
     saveReturnTo,
     passport.authenticate("discord", {
-        scope: ["identify"]
+        scope: ["identify"], keepSessionInfo: true
     })
 )
 
 // redirect
 router.get("/auth/redirect", (req, res, next) => {
-    passport.authenticate('discord', function (err, user, info) {
+    const ret = req.session.returnTo
+    passport.authenticate('discord', { scope: ["identify"], keepSessionInfo: true }, function (err, user, info) {
         if (err) { return next(err); }
         if (!user) { return res.redirect('/login'); }
         req.logIn(user, function (err) {
             if (req.session) {
-                const ret = req.session.returnTo
                 if (!ret) {
                     return res.redirect('/api/auth')
                 }
@@ -32,7 +32,7 @@ router.get("/auth/redirect", (req, res, next) => {
                     return res.redirect(`http://${ret.split('/')[2]}/nwl`)
                 }
                 else {
-                    res.redirect(ret);
+                    return res.redirect('http://localhost:8080')
                     delete req.session.returnTo;
                 }
             } else {

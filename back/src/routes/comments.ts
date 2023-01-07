@@ -40,7 +40,6 @@ router.patch("/edit_comment", checkAuth, async (req, res) => {
       body.rating,
       user.id
     )
-    console.log("added", added)
     res.sendStatus(added ? 201 : 500)
   } catch (err) {
     res.sendStatus(500)
