@@ -17,11 +17,12 @@ declare module 'express-session' {
 }
 
 export const app = express()
+app.set('trust proxy', 1);
 app.use(cookieParser());
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 app.use(cors({ origin: ['http://localhost:8080', 'https://teamfilm.vercel.app'], credentials: true },));
-app.use(session({ secret: process.env.SECRETSESSION, resave: false, saveUninitialized: false, cookie: { maxAge: 6000 * 60 * 24 * 6 * 7, sameSite: 'none', secure: true } }))
+app.use(session({ secret: process.env.SECRETSESSION, resave: false, saveUninitialized: false, proxy: true, cookie: { maxAge: 6000 * 60 * 24 * 6 * 7, sameSite: 'none', secure: true } }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use("/api", misc)
