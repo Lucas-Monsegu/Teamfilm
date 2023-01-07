@@ -21,6 +21,8 @@ router.get("/login",
 router.get("/auth/redirect", (req, res, next) => {
     const ret = req.session.returnTo
     passport.authenticate('discord', { scope: ["identify"], keepSessionInfo: true }, function (err, user, info) {
+        console.log(err)
+        console.log(user)
         if (err) { return next(err); }
         if (!user) { return res.redirect('/login'); }
         req.logIn(user, function (err) {
