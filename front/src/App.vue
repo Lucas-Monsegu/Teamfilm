@@ -35,7 +35,7 @@ import axios from 'axios'
 import Cookie from 'vue-cookie'
 import Animations from '@/components/Animations.vue'
 import Snack from '@/components/Snack.vue'
-
+axios.defaults.withCredentials = true
 export default {
     name: 'App',
     components: {
