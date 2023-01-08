@@ -13,7 +13,7 @@ router.get("/get_movie/:id", async (req, res) => {
     try {
         parseInt(req.params.id)
     }
-    catch{
+    catch {
         res.sendStatus(400)
         return
     }
@@ -31,6 +31,7 @@ router.post("/add_film/:id", checkAuth, async (req, res) => {
         res.sendStatus(added ? 201 : 500)
     }
     catch (err) {
+        console.log(err)
         res.sendStatus(500)
     }
 })

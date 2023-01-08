@@ -22,7 +22,12 @@ app.use(cookieParser());
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 app.use(cors({ origin: ['http://localhost:8080', 'https://teamfilm.vercel.app'], credentials: true },));
-app.use(session({ secret: process.env.SECRETSESSION, resave: false, saveUninitialized: false, proxy: true, cookie: { maxAge: 6000 * 60 * 24 * 6 * 7, sameSite: 'none', secure: true } }))
+if (process.env.NODE_ENV === 'production') {
+    app.use(session({ secret: process.env.SECRETSESSION, resave: false, saveUninitialized: false, proxy: true, cookie: { maxAge: 6000 * 60 * 24 * 6 * 7, sameSite: 'none', secure: true } }))
+}
+else {
+    app.use(session({ secret: process.env.SECRETSESSION, resave: false, saveUninitialized: false, proxy: true, cookie: { maxAge: 6000 * 60 * 24 * 6 * 7 } }))
+}
 app.use(passport.initialize())
 app.use(passport.session())
 app.use("/api", misc)

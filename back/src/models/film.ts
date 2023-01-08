@@ -1,9 +1,5 @@
 import Pool from "./pg"
-import { RequestInfo, RequestInit } from 'node-fetch';
-
-const fetch = (url: RequestInfo, init?: RequestInit) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(url, init));
-
+import axios from 'axios'
 class Film {
     // id: number | null = null
     // constructor
@@ -37,13 +33,13 @@ class Film {
     }
     static async UpdatePoster(tmdbId: number): Promise<Boolean> {
         const url = `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=e59fb866a5c3211ad38d145410a3598b&language=en-US`
-        const res = await fetch(url)
+        const res = await axios.get(url)
         if (res.status != 200) {
             return false
         }
         let json
         try {
-            json = await res.json()
+            json = await res.data
         }
         catch {
             return false
@@ -60,13 +56,13 @@ class Film {
     static async AddMovie(tmdbId: number): Promise<Boolean> {
         const text = "INSERT INTO main.film(tmdb_id, genres, title, language, release_date, runtime, poster_path, rating) VALUES($1, $2, $3, $4, $5, $6, $7, $8)"
         const url = `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=e59fb866a5c3211ad38d145410a3598b&language=en-US`
-        const res = await fetch(url)
+        const res = await axios(url)
         if (res.status != 200) {
             return false
         }
         let json
         try {
-            json = await res.json()
+            json = await res.data
         }
         catch {
             return false
