@@ -27,5 +27,5 @@ It uses discord as an auth system. To give access to the website you need to hav
 
 ## Hosting
 
-- For the front[Vercel](https://vercel.com/)
-- For the backend + DB[Railway](https://railway.app/)
+- For the front [Vercel](https://vercel.com/)
+- For the backend + DB [Railway](https://railway.app/)
