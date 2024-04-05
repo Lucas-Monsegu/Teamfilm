@@ -1,0 +1,70 @@
+
+services:
+  # Node.js application
+
+  teamfilm-api:
+    container_name: teamfilm-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.teamfilm-api.rule=Host(`teamfilm.ddns.net`)"
+      - "traefik.http.routers.teamfilm-api.entrypoints=websecure"
+      - "traefik.http.routers.teamfilm-api.tls=true"
+      - "traefik.http.routers.teamfilm-api.tls.certresolver=myresolver"
+      - "traefik.http.services.teamfilm-api.loadbalancer.server.port=3001"
+      - "traefik.http.services.teamfilm-api.loadbalancer.server.scheme=http"  
+    networks:
+      - my-network
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/mydatabase
+
+  # PostgreSQL database
+  db:
+    container_name: my-postgres-db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: teamfilm
+      POSTGRES_PASSWORD: shutterisland
+      POSTGRES_DB: teamfilm
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - my-network
+
+  traefik:
+    image: "traefik:v2.6"
+    container_name: traefik
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"  # Only for development, remove this in production
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=lucas.mgu@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
